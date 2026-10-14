@@ -1,0 +1,40 @@
+% ==================================================================
+% id:       rv-005
+% topic:    משתנים מקריים
+% subtopic: משתנים מקריים בלתי תלויים
+% solution: full
+% verified: no
+% ==================================================================
+זורקים 2 מטבעות הוגנים ובלתי תלויים, שבצדדיהם $0$ ו-$1$. נגדיר את המשתנים המקריים:
+$X_0$ = מספר האפסים שיצאו; \ $X_1$ = מספר האחדות שיצאו; \ $Y$ = סכום המספרים שיצאו; \ $Z=1$ אם תוצאות המטבעות שונות ו-$Z=0$ אם הן זהות.
+
+בכל סעיף בדקו, בעזרת ההגדרה, אם שני המשתנים בלתי תלויים:
+\begin{solbox}
+\unverified
+בכל הסעיפים המשתנים \textbf{תלויים}. בכל אחד מספיק למצוא זוג ערכים $a,b$ שעבורו
+\[
+\PP(U=a,\ V=b)\neq\PP(U=a)\,\PP(V=b).
+\]
+\end{solbox}
+\begin{enumerate}
+\item $X_0,X_1$;
+\begin{solbox}
+\unverified
+$\PP(X_0=2,X_1=2)=0$ (מאורע ריק), אבל $\PP(X_0=2)\PP(X_1=2)=\frac14\cdot\frac14\neq0$.
+\end{solbox}
+\item $X_0,Y$;
+\begin{solbox}
+\unverified
+$\PP(X_0=0,Y=0)=0$ (בשני המטבעות יצא 1, אבל הסכום 0), אבל $\PP(X_0=0)\PP(Y=0)=\frac14\cdot\frac14\neq0$.
+\end{solbox}
+\item $X_1,Z$;
+\begin{solbox}
+\unverified
+$\PP(X_1=2,Z=1)=0$, אבל $\PP(X_1=2)\PP(Z=1)=\frac14\cdot\frac12\neq0$.
+\end{solbox}
+\item $Y,Z$.
+\begin{solbox}
+\unverified
+$\PP(Y=0,Z=1)=0$, אבל $\PP(Y=0)\PP(Z=1)=\frac14\cdot\frac12\neq0$.
+\end{solbox}
+\end{enumerate}

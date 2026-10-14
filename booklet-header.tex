@@ -1,0 +1,117 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% עמוד השער של חוברת התרגילים לסטודנטים (booklet.tex).
+% ערכו כאן את הסמסטר, שם הקורס וההערה -- booklet.tex עצמו נוצר אוטומטית.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\semester}{סמסטר א' תשפ״ז}
+\newcommand{\course}{הסתברות לסטטיסטיקה}
+\newcommand{\bookletnote}{%
+החוברת מרכזת תרגילים על כל נושאי הקורס, ותעודכן במהלך הסמסטר.
+}
+
+% כתובת אתר התרגול (רמזים ופתרונות שלב אחר שלב). מופיעה בעמוד השער, עם קוד QR.
+% \string_ : a literal underscore, both in the printed address and in the QR code
+\edef\siteurl{https://motkep173.github.io/Ex2027A\string_9921/}
+% הכותרת הגדולה בעמוד השער. חוברת הרמזים והפתרונות (solutions.tex) מחליפה אותה.
+\providecommand{\bookletkind}{חוברת תרגילים}
+\providecommand{\bookletsitenote}{רמזים ופתרונות מלאים, שנפתחים שלב אחר שלב, נמצאים באתר התרגול.
+אפשר גם להוריד משם את חוברת הרמזים והפתרונות.}
+\usepackage{qrcode}
+
+\newcommand{\booklettitlepage}{%
+\begin{titlepage}
+\begin{textblock*}{9cm}[0.5,0.5](105mm,4cm)
+	\centering\includegraphics[width=2.2in]{preamble/logo.jpg}
+\end{textblock*}
+\vspace*{5cm}
+\begin{center}
+{\large היחידה להוראת קורסי יסוד}\\[0.8em]
+{\Large\bf \course\ -- 214.1.9921}\\[3em]
+\textcolor{bkorange}{\fontsize{34}{40}\selectfont\bfseries \bookletkind}\\[1em]
+\textcolor{bkgray!60}{\rule{0.5\textwidth}{1.2pt}}\\[1.5em]
+\textcolor{bkgray}{\Large \semester}\\[4em]
+\begin{minipage}{0.75\textwidth}
+\centering\large \bookletnote
+\end{minipage}
+\vfill
+\begin{minipage}{0.62\textwidth}
+\raggedleft\bookletsitenote\\[0.4em]
+{\small\textenglish{\ttfamily \siteurl}}
+\end{minipage}\hspace{1.2em}%
+\begin{minipage}{2.6cm}
+\centering\qrcode[height=2.4cm]{\siteurl}
+\end{minipage}\par
+\vspace{2.5em}
+{\small עודכן לאחרונה: \today}
+\end{center}
+\end{titlepage}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% עיצוב החוברת: צבעים, כותרות הפרקים והפרדה בין התרגילים.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\definecolor{bkorange}{HTML}{E46C0A}
+\definecolor{bkgray}{HTML}{5A5A5A}
+\definecolor{bklight}{HTML}{F3F3F3}
+
+% סגנון ההפרדה בין התרגילים: lines (קו אפור), boxes (תיבה אפורה), space (מרווח בלבד)
+\providecommand{\bookletstyle}{lines}
+
+% כותרת פרק: מספר ושם בכתום, וקו אפור מתחת
+\makeatletter
+\renewcommand{\section}{\@ifstar\bk@sectionstar\bk@section}
+\newcommand{\bk@heading}[1]{%
+  {\noindent\color{bkorange}\Huge\bfseries #1\par}\nobreak\vspace{4pt}%
+  {\color{bkgray!50}\hrule height 1.2pt}\nobreak\vspace{1.2em}}
+\newcommand{\bk@sectionstar}[1]{\bk@heading{#1}\par\@afterheading}
+\newcommand{\bk@section}[1]{%
+  \refstepcounter{section}%
+  \addcontentsline{toc}{section}{\protect\numberline{\thesection}#1}%
+  \bk@heading{\thesection\quad #1}}
+\makeatother
+
+% תרגיל אחד בחוברת: רשימה עם פריט אחד, שהמספר שלו הוא המונה bkq (רץ מתחילת החוברת).
+% כך הסעיפים (א), (ב)... נשארים ברמה השנייה של הרשימות, כמו קודם.
+% \bookq[כותרת פרק]{קובץ}: התרגיל לא נשבר בין עמודים. לפני הדפסתו מודדים את גובהו (כולל כותרת הפרק
+% שלפניו, אם יש), ואם אין לו מספיק מקום בעמוד הנוכחי הוא עובר לעמוד הבא.
+% תרגיל עם פתרון שארוך מעמוד שלם: נשמר יחד לפחות נוסח השאלה (בלי הפתרון) ותחילת הפתרון.
+% פרק חדש לא מתחיל בעמוד חדש; הכותרת שלו תמיד נשארת עם התרגיל הראשון בפרק.
+\makeatletter
+\edef\bk@style{\bookletstyle}
+\def\bk@lines{lines}
+\def\bk@boxes{boxes}
+\newcounter{bkq}
+\newcommand{\bknum}[1]{\textcolor{bkorange}{\bfseries #1.}}
+\newcommand{\bk@q}[1]{\stepcounter{bkq}%
+  \begin{enumerate}[label=\bknum{\arabic{bkq}}, leftmargin=2em, topsep=0pt]\item \input{#1}\end{enumerate}}
+\newtcolorbox{bkbox}{enhanced, breakable, colback=bklight, frame hidden, sharp corners,
+  borderline east={2.5pt}{0pt}{bkorange}, left=4pt, right=6pt, top=5pt, bottom=5pt,
+  before skip=0pt, after skip=10pt}
+\ifx\bk@style\bk@boxes
+  \newcommand{\bk@one}[1]{\begin{bkbox}\bk@q{#1}\end{bkbox}}
+\else\ifx\bk@style\bk@lines
+  \newcommand{\bk@one}[1]{\bk@q{#1}\par\vspace{8pt}{\color{bkgray!35}\hrule height 0.5pt}\vspace{8pt}}
+\else
+  \newcommand{\bk@one}[1]{\bk@q{#1}\par\vspace{16pt}}
+\fi\fi
+% מדידה: מסדרים את התרגיל בתיבה שלא מודפסת, ומחזירים את המונים למצבם.
+% (הכתיבה לקבצי aux מתוך התיבה לא מתבצעת, כי התיבה לא נשלחת לעמוד.)
+\newbox\bk@measure
+\newcount\bk@cq \newcount\bk@ceq \newcount\bk@csec
+\newdimen\bk@need
+\newcommand{\bk@measureit}[1]{%
+  \bk@cq=\value{bkq}\bk@ceq=\value{equation}\bk@csec=\value{section}%
+  \setbox\bk@measure=\vbox{\hsize\linewidth #1}%
+  \setcounter{bkq}{\bk@cq}\setcounter{equation}{\bk@ceq}\setcounter{section}{\bk@csec}%
+  \bk@need=\dimexpr\ht\bk@measure+\dp\bk@measure\relax}
+\newcommand{\bookq}[2][]{%
+  \par
+  \bk@measureit{#1\bk@one{#2}}%
+  \ifdim\bk@need>\dimexpr\textheight-3\baselineskip\relax
+    % ארוך מעמוד: מודדים רק את נוסח השאלה, בלי הפתרונות
+    \bk@measureit{\RenewEnviron{solbox}{}#1\bk@one{#2}}%
+    \advance\bk@need by 4\baselineskip
+    \ifdim\bk@need>\textheight \bk@need=\textheight \fi
+  \fi
+  \needspace{\bk@need}%
+  #1\bk@one{#2}}
+\makeatother

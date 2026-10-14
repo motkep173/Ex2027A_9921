@@ -1,0 +1,76 @@
+% ==================================================================
+% id:       comb-002
+% topic:    קומבינטוריקה
+% subtopic: המקדם הבינומי
+% solution: full
+% verified: no
+% ==================================================================
+בשאלה זו נעסוק במקדם הבינומי $\binom nk=\frac{n!}{k!(n-k)!}$, שמשמעותו הקומבינטורית היא "מספר הדרכים לבחור $k$ עצמים מתוך $n$ עצמים שונים".
+\begin{enumerate}
+\item חשבו ללא מחשבון:\quad (1)~$\binom42$,\qquad (2)~$\binom{100}1$,\qquad (3)~$\binom{20}2$.
+\begin{solbox}
+\unverified
+(1) $\binom42=\frac{4!}{2!\,2!}=\frac{3\cdot4}{2}=\ans6$. \quad
+(2) יש בדיוק 100 דרכים לבחור סטודנט אחד מתוך 100, ולכן $\binom{100}1=\ans{100}$. \quad
+(3) $\binom{20}2=\frac{20!}{2!\,18!}=\frac{19\cdot20}2=\ans{190}$.
+\end{solbox}
+\item הראו שלכל $1\le k\le n$ מתקיים $k\binom nk=n\binom{n-1}{k-1}$.
+\begin{solbox}
+\unverified
+נפתח את האגף השמאלי:
+\[
+k\binom nk=k\cdot\frac{n!}{k!\,(n-k)!}=\frac{n!}{(k-1)!\,(n-k)!}.
+\]
+ואת האגף הימני:
+\[
+n\binom{n-1}{k-1}=n\cdot\frac{(n-1)!}{(k-1)!\,\big(n-1-(k-1)\big)!}=\frac{n!}{(k-1)!\,(n-k)!}.
+\]
+קיבלנו את אותו ביטוי, ולכן הזהות נכונה.
+\end{solbox}
+\item נסמן $\Omega=\set{A,B,C}$.
+\begin{enumerate}
+\item כמה תתי-קבוצות שונות יש ל-$\Omega$? כתבו את כולן.
+\item כמה מהן בגודל זוגי? ($0$ נחשב זוגי.)
+\item כמה מהן בגודל אי-זוגי?
+\end{enumerate}
+\begin{solbox}
+\unverified
+\begin{enumerate}
+\item יש $2^3=\ans8$ תתי-קבוצות: $\emptyset,\ \set A,\ \set B,\ \set C,\ \set{A,B},\ \set{A,C},\ \set{B,C},\ \set{A,B,C}$.
+\item יש בדיוק $\ans4$ בגודל זוגי: $\emptyset,\ \set{A,B},\ \set{A,C},\ \set{B,C}$.
+\item יש בדיוק $\ans4$ בגודל אי-זוגי: $\set A,\ \set B,\ \set C,\ \set{A,B,C}$.
+\end{enumerate}
+\end{solbox}
+\item נסמן $\Omega=\set{A,B,C,D,E,F,G,H}$.
+\begin{enumerate}
+\item כמה תתי-קבוצות שונות בגודל 2 יש ל-$\Omega$?
+\item כמה תתי-קבוצות שונות יש ל-$\Omega$?
+\item כמה מהן בגודל זוגי?
+\item כמה מהן בגודל אי-זוגי?
+\end{enumerate}
+\begin{solbox}
+\unverified
+\begin{enumerate}
+\item בוחרים שני איברים שונים מתוך 8, בלי חשיבות לסדר ובלי חזרות: $\binom82=\frac{7\cdot8}2=\ans{28}$.
+\item $2^{|\Omega|}=2^8=\ans{256}$.
+\item תת-קבוצה בגודל זוגי היא מגודל $0,2,4,6$ או $8$, ולכן מספרן
+\[
+\binom80+\binom82+\binom84+\binom86+\binom88=1+28+70+28+1=\ans{128}.
+\]
+\item באותו אופן, $\binom81+\binom83+\binom85+\binom87=8+56+56+8=\ans{128}$.
+\end{enumerate}
+\end{solbox}
+\item היעזרו בבינום של ניוטון, $(a+b)^n=\sum_{k=0}^n\binom nka^kb^{n-k}$, והראו שלכל קבוצה סופית $\Omega$, מספר תתי-הקבוצות של $\Omega$ בגודל זוגי שווה למספר תתי-הקבוצות בגודל אי-זוגי. (רמז: סמנו $|\Omega|=n$ ובחרו את $a,b$ להיות\dots)
+\begin{solbox}
+\unverified
+נסמן $|\Omega|=n$, ונציב בבינום של ניוטון $a=-1$, $b=1$:
+\[
+0=\big((-1)+1\big)^n=\sum_{k=0}^n\binom nk(-1)^k\,1^{n-k}=\binom n0-\binom n1+\binom n2-\binom n3+\dots+(-1)^n\binom nn.
+\]
+נעביר את המחוברים עם הסימן השלילי לאגף השני ונקבל
+\[
+\ans{\binom n1+\binom n3+\dots=\binom n0+\binom n2+\dots}
+\]
+(המחובר האחרון בכל אגף הוא $\binom nn$ או $\binom n{n-1}$, לפי הזוגיות של $n$). האגף הימני סופר את תתי-הקבוצות של $\Omega$ בגודל זוגי, והשמאלי את אלה בגודל אי-זוגי.
+\end{solbox}
+\end{enumerate}

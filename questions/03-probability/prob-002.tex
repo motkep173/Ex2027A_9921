@@ -1,0 +1,55 @@
+% ==================================================================
+% id:       prob-002
+% topic:    מבוא להסתברות
+% subtopic: פונקציית הסתברות על מרחב בדיד
+% solution: full
+% verified: no
+% ==================================================================
+בניסוי הבא בוחרים מספר טבעי כלשהו, כלומר מרחב המדגם הוא $\Omega=\set{1,2,3,\dots}$, ונתונה פונקציית הסתברות $\PP$. פתרו כל אחד משני הסעיפים בנפרד; בכל סעיף נתון מידע אחר על $\PP$.
+\begin{enumerate}
+\item ידוע ש-$\PP(\set k)=C\cdot\big(\frac23\big)^k$ לכל $k\ge1$.
+\begin{enumerate}
+\item מצאו את $C$.
+\item חשבו את $\PP(A)$, כאשר $A$ = "נבחר מספר זוגי".
+\end{enumerate}
+\begin{solbox}
+\unverified
+\begin{enumerate}
+\item המאורעות $\set1,\set2,\dots$ זרים בזוגות, ולכן
+\[
+1=\PP(\Omega)=\PP(\set1)+\PP(\set2)+\dots=C\cdot\frac23+C\Big(\frac23\Big)^2+\cdots.
+\]
+זה טור הנדסי אינסופי עם איבר ראשון $a_1=\frac23C$ ומנה $q=\frac23$. לכן
+\[
+1=\frac{a_1}{1-q}=\frac{\frac23C}{1-\frac23}=2C\quad\Longrightarrow\quad\ans{C=\tfrac12}.
+\]
+\item $A=\set{2,4,6,\dots}$, ולכן
+\[
+\PP(A)=\sum_{n=1}^\infty\PP(\set{2n})=\frac12\sum_{n=1}^\infty\Big(\frac23\Big)^{2n}=\frac12\sum_{n=1}^\infty\Big(\frac49\Big)^n=\frac12\cdot\frac{4/9}{1-4/9}=\ans{\frac25}.
+\]
+\end{enumerate}
+\end{solbox}
+\item ידוע ש-$\PP(\set{k,k+1})=C\cdot\big(\frac23\big)^k$ לכל $k\ge1$.
+\begin{enumerate}
+\item מצאו את $C$.
+\item חשבו את $\PP(B)$, כאשר $B$ = "נבחר 1 או 4".
+\end{enumerate}
+\begin{solbox}
+\unverified
+\begin{enumerate}
+\item \textbf{שימו לב:} המאורעות $\set{1,2}$, $\set{2,3}$, $\set{3,4}$, \dots \emph{אינם} זרים בזוגות! אבל המאורעות $\set{1,2}$, $\set{3,4}$, $\set{5,6}$, \dots כן זרים בזוגות, והאיחוד שלהם הוא $\Omega$. לכן
+\[
+1=\PP(\set{1,2})+\PP(\set{3,4})+\dots=C\cdot\frac23+C\Big(\frac23\Big)^3+\cdots=\frac{\frac23C}{1-\frac49}=\frac{6C}5,
+\]
+ולכן $\ans{C=\tfrac56}$.
+
+\item $B=\set{1,4}$, ולכן
+\[
+\begin{split}
+\PP(B)&=\PP(\set{1,2,3,4})-\PP(\set{2,3})=\PP(\set{1,2})+\PP(\set{3,4})-\PP(\set{2,3})\\
+&=\frac56\Big[\frac23+\Big(\frac23\Big)^3-\Big(\frac23\Big)^2\Big]=\frac56\cdot\frac{18+8-12}{27}=\ans{\frac{35}{81}}.
+\end{split}
+\]
+\end{enumerate}
+\end{solbox}
+\end{enumerate}

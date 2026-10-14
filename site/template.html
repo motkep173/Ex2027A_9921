@@ -1,0 +1,676 @@
+<title>חוברת התרגילים בהסתברות</title>
+<meta name="description" content="חוברת התרגילים בהסתברות לסטטיסטיקה (214.1.9921), עם פתרונות, אוניברסיטת בן־גוריון בנגב, היחידה להוראת קורסי יסוד">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&display=swap">
+<style>
+/* Layout: a top bar, then a sticky, foldable sidebar (search, topics, filters, downloads) beside the list of exercises */
+:root {
+  --paper: #f6f8fb;
+  --sheet: #ffffff;
+  --ink: #1b2433;
+  --muted: #5b6678;
+  --line: #d9dfe8;
+  --accent: #2348a8;
+  --accent-soft: #e6ecfa;
+  --answer: #eef6f0;
+  --answer-ink: #1e6b3a;
+  --warn: #fbf3e2;
+  --warn-ink: #8a5a00;
+  --solution: #fdf6dc;
+  --solution-line: #eadcaa;
+  --grid: rgba(35, 72, 168, 0.06);
+  /* BGU orange: --brand is dark enough for text on white, --brand-bright is for fills */
+  --brand: #b85400;
+  --brand-bright: #f39200;
+  --brand-soft: #fff1e0;
+  --font-body: "Assistant", "Arial Hebrew", "Segoe UI", Arial, sans-serif;
+  --step--1: 0.8125rem;
+  --step-0: 1rem;
+  --step-1: 1.1875rem;
+  --step-2: 1.6rem;
+  --step-3: 2.2rem;
+}
+/* Always light, as on the exams bank site: questions on white with a grid, solutions on soft yellow */
+:root { color-scheme: light; }
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.65;
+  padding: 0 16px;
+}
+.wrap { max-width: 780px; margin: 0 auto; padding-block: 20px 96px; display: grid; gap: 24px; }
+
+/* Top bar: logo, title and course details as one compact unit; the logo sits on white in both themes,
+   since its lettering is dark gray */
+.topbar {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; padding: 12px 18px;
+  background: var(--sheet); border: 1px solid var(--line); border-bottom: 3px solid var(--brand-bright); border-radius: 12px;
+}
+.logo { display: block; height: 46px; width: auto; background: #fff; border-radius: 6px; padding: 3px 6px; box-sizing: content-box; }
+.titles { display: grid; gap: 1px; padding-inline-start: 16px; border-inline-start: 1px solid var(--line); min-width: 0; }
+h1 { font-size: var(--step-2); line-height: 1.2; margin: 0; }
+.course { font-size: var(--step--1); color: var(--muted); }
+.course b { color: var(--brand); font-weight: 700; }
+.topbar .stats { margin-inline-start: auto; flex-direction: column; align-items: end; gap: 0; }
+.intro { display: grid; gap: 4px; }
+.lead { margin: 0; color: var(--muted); }
+.stats { display: flex; flex-wrap: wrap; gap: 0 14px; font-size: var(--step--1); color: var(--muted); }
+.stats strong { color: var(--ink); font-variant-numeric: tabular-nums; }
+
+/* Layout: on wide screens a sticky sidebar (search, filters, tools) beside the content; stacked on narrow ones */
+.layout { display: grid; gap: 16px; }
+.side, .content { display: grid; gap: 16px; align-content: start; min-width: 0; }
+@media (min-width: 1100px) {
+  .wrap { max-width: 1160px; }
+  .layout { grid-template-columns: 290px minmax(0, 1fr); gap: 28px; align-items: start; }
+  .side {
+    position: sticky; top: 16px; max-height: calc(100vh - 32px); overflow: hidden auto; gap: 12px;
+    padding: 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--sheet);
+  }
+  .side .filters { background: var(--paper); }
+  .side .filters-body { grid-template-columns: 1fr; }
+  .side .filters summary { flex-wrap: wrap; gap: 6px 8px; padding-inline: 12px; }
+  .side .actions { flex-direction: column; }
+  .side .actions .btn { text-align: center; }
+  .side .search input { background: var(--paper); }
+  /* The student can hide the sidebar; the content then takes the full width */
+  .side .side-toggle { display: flex; }
+  .wrap.side-hidden .layout { grid-template-columns: minmax(0, 1fr); }
+  .wrap.side-hidden .side { display: none; }
+  .wrap.side-hidden .btn.show-side { display: inline-flex; }
+}
+.side-toggle {
+  display: none; align-items: center; gap: 6px; justify-self: end; border: 0; background: transparent; cursor: pointer;
+  font-size: var(--step--1); font-weight: 600; color: var(--muted); padding: 0 2px;
+}
+.side-toggle:hover { color: var(--brand); }
+.side-toggle svg, .show-side svg { width: 16px; height: 16px; }
+.btn.show-side {
+  display: none; position: fixed; inset-block-end: 20px; inset-inline-start: 20px; z-index: 10; align-items: center; gap: 8px;
+  border-radius: 999px; padding: 10px 18px; background: var(--sheet); border-color: var(--accent); color: var(--accent);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+}
+
+/* Free-text search over question text, options, topic and subtopic */
+.search { position: relative; }
+.search input {
+  width: 100%; font: inherit; color: inherit; padding: 10px 40px 10px 14px; border: 1px solid var(--line);
+  border-radius: 10px; background: var(--sheet);
+}
+.search input:focus { outline: 2px solid var(--brand-bright); outline-offset: 0; border-color: transparent; }
+.search svg { position: absolute; inset-inline-start: 13px; top: 50%; transform: translateY(-50%); width: 18px; height: 18px; color: var(--muted); pointer-events: none; }
+
+/* Filters: a collapsible panel; the summary line says how many filters are on */
+.filters { border: 1px solid var(--line); border-radius: 10px; background: var(--sheet); }
+.filters summary {
+  display: flex; align-items: center; gap: 10px; padding: 10px 16px; cursor: pointer;
+  font-weight: 700; list-style: none; user-select: none;
+}
+.sum-title { white-space: nowrap; }
+.filters summary::-webkit-details-marker { display: none; }
+.filters summary::before {
+  content: ""; width: 7px; height: 7px; border: solid var(--muted); border-width: 0 0 2px 2px;
+  transform: rotate(45deg); transition: transform 0.15s; margin-top: -3px;
+}
+.filters[open] summary::before { transform: rotate(-45deg); margin-top: 3px; }
+.filters summary:hover { color: var(--accent); }
+.active-count, .filters .btn { white-space: nowrap; }
+.active-count { font-size: var(--step--1); font-weight: 600; color: var(--accent); background: var(--accent-soft); border-radius: 999px; padding: 1px 10px; }
+.active-count:empty { display: none; }
+.filters-body {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px 12px; align-items: end;
+  padding: 4px 16px 14px; border-top: 1px solid var(--line); padding-top: 12px;
+}
+.field { display: grid; gap: 2px; min-width: 0; }
+.field label { font-size: var(--step--1); font-weight: 600; color: var(--muted); }
+.filters select { padding: 5px 8px; width: 100%; }
+.filters .btn { padding: 3px 12px; margin-inline-start: auto; font-size: var(--step--1); }
+select, button { font: inherit; color: inherit; }
+select { padding: 8px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--paper); }
+select:disabled { opacity: 0.55; }
+.btn { border: 1px solid var(--line); background: transparent; border-radius: 6px; padding: 8px 14px; cursor: pointer; font-weight: 600; }
+.btn:hover { background: var(--accent-soft); }
+.download { color: var(--accent); border-color: var(--accent); text-decoration: none; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.random-btn { background: var(--brand-bright); border-color: var(--brand-bright); color: #1b1200; }
+.random-btn:hover { background: var(--brand-bright); filter: brightness(1.08); }
+.how { font-size: var(--step--1); color: var(--muted); }
+.how summary { cursor: pointer; color: var(--accent); font-weight: 600; width: fit-content; }
+.how ul { margin: 6px 0 0; padding-inline-start: 20px; display: grid; gap: 4px; }
+/* Names of buttons inside the explanation, drawn as small framed labels */
+.key { display: inline-block; padding: 0 7px; border: 1px solid var(--line); border-radius: 5px; background: var(--sheet); color: var(--ink); font-weight: 600; line-height: 1.5; white-space: nowrap; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.status { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; font-size: var(--step--1); color: var(--muted); }
+.status strong { color: var(--ink); font-variant-numeric: tabular-nums; }
+
+/* Question cards */
+.list { display: grid; gap: 18px; }
+.q {
+  background: var(--sheet); border: 1px solid var(--line); border-radius: 10px;
+  padding: 20px 22px; display: grid; gap: 14px;
+  background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+.meta { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: var(--step--1); }
+.chip { padding: 1px 10px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+.chip.sub { background: transparent; border: 1px solid var(--line); color: var(--muted); }
+.source { font-size: var(--step-1); font-weight: 700; margin: 0; }
+.also { margin: -8px 0 0; font-size: var(--step--1); color: var(--muted); }
+.q-text { overflow-wrap: anywhere; }
+.q-text p { margin: 0 0 0.5em; }
+.q img { max-width: 100%; height: auto; border: 1px solid var(--line); border-radius: 6px; background: #fff; justify-self: start; }
+.options { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.options li { display: flex; gap: 10px; align-items: baseline; padding: 4px 10px; border-radius: 6px; border: 1px solid transparent; }
+.options li .letter { font-weight: 700; color: var(--muted); min-width: 1.2em; }
+.options li.correct { background: var(--answer); color: var(--answer-ink); border-color: currentColor; }
+.options li.correct .letter { color: inherit; }
+.note { font-size: var(--step--1); color: var(--muted); }
+/* Parts of a question outside the current syllabus */
+.off-note { font-size: var(--step--1); color: var(--warn-ink); background: var(--warn); border-radius: 6px; padding: 6px 10px; }
+.off-syllabus { font-size: var(--step--1); font-weight: 600; color: var(--warn-ink); }
+
+.toggle {
+  justify-self: start; border: 1px solid var(--accent); color: var(--accent); background: transparent;
+  border-radius: 6px; padding: 6px 14px; cursor: pointer; font-weight: 700;
+}
+.toggle:hover { background: var(--accent-soft); }
+.toggle[aria-expanded="true"] { background: var(--accent); color: var(--sheet); }
+.btn-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.solved-btn { margin-inline-start: auto; border: 1px solid var(--line); border-radius: 999px; background: transparent; padding: 4px 12px; cursor: pointer; font-size: var(--step--1); color: var(--muted); font-weight: 600; }
+.solved-btn:hover { border-color: var(--brand); color: var(--brand); }
+.solved-btn[aria-pressed="true"] { background: var(--brand-soft); border-color: var(--brand-bright); color: var(--brand); }
+.q.is-solved { border-inline-start: 4px solid var(--brand-bright); }
+.hint-btn { border-style: dashed; }
+.hint { background: var(--accent-soft); border-radius: 8px; padding: 10px 14px; }
+.hint b { color: var(--accent); margin-inline-end: 4px; }
+.toggle:disabled { border-color: var(--line); color: var(--muted); cursor: default; background: transparent; }
+
+/* Solutions sit on a soft yellow panel, set apart from the question */
+.solution { background: var(--solution); border: 1px solid var(--solution-line); border-radius: 8px; padding: 14px 16px; display: grid; gap: 12px; }
+.sol-head { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.sol-head h3 { margin: 0; font-size: var(--step--1); letter-spacing: 0.06em; color: var(--muted); }
+.badge { font-size: var(--step--1); font-weight: 700; padding: 1px 10px; border-radius: 999px; }
+.badge.official { background: var(--answer); color: var(--answer-ink); }
+.badge.unofficial { background: var(--warn); color: var(--warn-ink); border: 1px solid var(--solution-line); }
+.solution ol { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.answer { background: var(--answer); color: var(--answer-ink); border-radius: 6px; padding: 10px 14px; font-weight: 600; }
+.answer span { font-weight: 700; margin-inline-end: 6px; }
+
+.next { justify-self: start; }
+.more { justify-self: center; }
+.exam-head { font-size: var(--step-2); margin: 12px 0 0; padding-bottom: 6px; border-bottom: 2px solid var(--brand-bright); }
+.exam-head:first-child { margin-top: 0; }
+.empty { text-align: center; color: var(--muted); padding: 32px 0; }
+footer { font-size: var(--step--1); color: var(--muted); border-top: 1px solid var(--line); padding-top: 14px; display: grid; gap: 6px; }
+/* Topic navigation in the sidebar: each chapter folds open to its subtopics */
+.nav { border: 1px solid var(--line); border-radius: 10px; background: var(--sheet); }
+.side .nav { background: var(--paper); }
+.nav > summary { display: flex; align-items: center; gap: 10px; padding: 10px 16px; cursor: pointer; font-weight: 700; list-style: none; user-select: none; }
+.nav > summary::-webkit-details-marker { display: none; }
+.nav > summary::before { content: ""; width: 7px; height: 7px; border: solid var(--muted); border-width: 0 0 2px 2px; transform: rotate(45deg); transition: transform 0.15s; margin-top: -3px; }
+.nav[open] > summary::before { transform: rotate(-45deg); margin-top: 3px; }
+.nav-body { display: grid; gap: 2px; padding: 4px 8px 10px; border-top: 1px solid var(--line); }
+.nav-topic > summary { display: flex; justify-content: space-between; gap: 8px; padding: 4px 8px; border-radius: 6px; cursor: pointer; font-weight: 600; list-style: none; }
+.nav-topic > summary::-webkit-details-marker { display: none; }
+.nav-topic > summary:hover, .nav-sub:hover { background: var(--accent-soft); color: var(--accent); }
+.nav-topic > summary span, .nav-sub b { font-size: var(--step--1); color: var(--muted); font-weight: 600; font-variant-numeric: tabular-nums; }
+.nav-topic[open] > summary { color: var(--brand); }
+.nav-subs { display: grid; padding-inline-start: 10px; margin-bottom: 4px; }
+.nav-sub { all: unset; display: flex; justify-content: space-between; gap: 8px; padding: 2px 8px; border-radius: 6px; cursor: pointer; font-size: var(--step--1); }
+.nav-sub:focus-visible, .nav-topic > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.nav-sub[aria-current="true"] { background: var(--brand-soft); color: var(--brand); font-weight: 700; }
+.nav-all { all: unset; cursor: pointer; padding: 4px 8px; border-radius: 6px; font-weight: 600; color: var(--accent); }
+.nav-all:hover { background: var(--accent-soft); }
+
+/* Exercise-specific: lists inside questions, parts, hints for whole questions */
+.q-text ol, .solution ol ol { list-style: hebrew; }
+.q-text ol, .q-text ul, .solution li ol, .solution li ul { margin: 0.3em 0; padding-inline-start: 1.6em; }
+.q-text .intro { display: block; margin-bottom: 0.6em; }   /* not the page intro's grid */
+.part { display: flex; gap: 8px; align-items: baseline; }
+.part-letter { font-weight: 700; color: var(--accent); }
+.part > div { min-width: 0; flex: 1; }
+.step-item { margin: 0; padding-inline-start: 1.2em; list-style: disc; }
+.list > *, .q > *, .solution > *, .solution .steps > li { min-width: 0; }   /* wide formulas scroll inside their own box */
+.solution .steps { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; overflow-wrap: anywhere; }
+.chapter-head { font-size: var(--step-2); margin: 12px 0 0; padding-bottom: 6px; border-bottom: 2px solid var(--brand-bright); }
+.chapter-head:first-child { margin-top: 0; }
+/* Venn diagrams (drawn as SVG by make_site.py) and tables */
+.figs { display: flex; flex-wrap: wrap; gap: 10px 16px; justify-content: center; }
+figure.venn { margin: 0; display: inline-grid; justify-items: center; gap: 2px; font-size: var(--step--1); color: var(--muted); }
+figure.venn svg { display: block; }
+.venn-fill { fill: rgba(35, 72, 168, 0.32); }
+.venn-line { fill: none; stroke: var(--ink); stroke-width: 1.4; }
+figure.venn text { font: italic 13px "Times New Roman", serif; fill: var(--ink); text-anchor: middle; dominant-baseline: middle; }
+.tbl-wrap { overflow-x: auto; max-width: 100%; }
+.tbl { border-collapse: collapse; margin: 4px auto; font-variant-numeric: tabular-nums; }
+.tbl th, .tbl td { padding: 4px 12px; text-align: center; white-space: nowrap; }
+.tbl th { border-bottom: 1.5px solid var(--ink); font-weight: 600; }
+.tbl .rule { border-inline-end: 1.5px solid var(--ink); }
+/* A suggested question (preview.html only): pink until it is approved */
+.q.suggested { border-color: #d63384; box-shadow: inset 0 0 0 1px #d63384; }
+.badge.suggested { background: #fbe4ef; color: #a3195b; border: 1px solid #d63384; }
+
+/* Formulas are drawn as SVG (as on the exams bank site): exact sizes, nothing clipped. A display formula wider than
+   the card scrolls inside its own line. */
+mjx-container { direction: ltr; }
+/* A display formula wider than the card starts at its left edge and scrolls (centering would push its start out of reach) */
+mjx-container[display="true"] { display: flex !important; overflow-x: auto; overflow-y: hidden; max-width: 100%; min-width: 0 !important; }
+mjx-container[display="true"] > svg { margin-inline: auto; flex: none; }
+/* An inline formula wider than its line shrinks to fit instead of pushing the card past the screen edge */
+.q mjx-container:not([display="true"]) > svg { max-width: 100%; height: auto; }
+/* The hidden copy of each formula for screen readers must not widen the page */
+mjx-container { position: relative; }
+mjx-assistive-mml { max-width: 100%; overflow: hidden; }
+@media (max-width: 480px) { .solution mjx-container[display="true"] { font-size: 88%; } }
+
+@media (max-width: 480px) {
+  .wrap { padding-block-start: 12px; gap: 18px; }
+  .topbar { padding: 10px 12px; gap: 8px 12px; }
+  .logo { height: 34px; }
+  .titles { padding-inline-start: 0; border: 0; flex-basis: 100%; }
+  h1 { font-size: var(--step-1); }
+  .topbar .stats { margin: 0; flex-direction: row; flex-basis: 100%; align-items: baseline; gap: 0 12px; padding-top: 6px; border-top: 1px solid var(--line); }
+  .q { padding: 16px; }
+  .filters-body { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hint:not([hidden]), .solution:not([hidden]), .stepwise li:not([hidden]), .stepwise .answer:not([hidden]) { animation: open 0.2s ease-out; }
+  @keyframes open { from { opacity: 0.4; transform: translateY(-3px); } to { opacity: 1; transform: none; } }
+}
+</style>
+
+<div class="wrap" dir="rtl" lang="he">
+  <header class="topbar">
+    <img class="logo" src="/*__LOGO__*/" alt="אוניברסיטת בן־גוריון בנגב" width="184" height="46">
+    <div class="titles">
+      <h1>חוברת התרגילים</h1>
+      <div class="course"><b>הסתברות לסטטיסטיקה</b> · קורס 214.1.9921 · היחידה להוראת קורסי יסוד</div>
+    </div>
+    <div class="stats" id="stats"></div>
+  </header>
+
+  <div class="intro">
+    <p class="lead">כל התרגילים מדפי התרגילים של הקורס, לפי סדר החומר, עם <span data-hints>רמזים ו</span>פתרונות מלאים.</p>
+    <details class="how">
+      <summary>איך זה עובד?</summary>
+      <ul>
+        <li>בחרו נושא או תת־נושא בסרגל כדי לתרגל את מה שלמדתם השבוע. התרגילים מסודרים לפי סדר החומר, כמו בחוברת.</li>
+        <li data-nohints>נסו לפתור לבד, ורק אז לחצו על <span class="key">הצג פתרון</span>. הפתרון נפתח שלב אחר שלב, כדי שתוכלו לנסות להמשיך לבד אחרי כל שלב.</li>
+        <li data-hints>נסו לפתור לבד. נתקעתם? לחצו על <span class="key">קבלת רמז</span>, ורק אז על <span class="key">הצג פתרון</span>. הפתרון נפתח שלב אחר שלב, כדי שתוכלו לנסות להמשיך לבד אחרי כל שלב.</li>
+        <li>אפשר להוריד את חוברת התרגילים ואת חוברת ה<span data-hints>רמזים וה</span>פתרונות כקובצי PDF. המספור בהן זהה למספור כאן.</li>
+      </ul>
+    </details>
+  </div>
+
+  <div class="layout">
+  <aside class="side" id="side" aria-label="חיפוש, נושאים וסינון">
+  <button class="side-toggle" id="hide-side" type="button" aria-controls="side" aria-expanded="true">
+    הסתרת הסרגל
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+  </button>
+  <div class="search" role="search">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    <input type="search" id="search" placeholder="חיפוש בתרגילים, למשל: בינומי" aria-label="חיפוש חופשי בתרגילים" autocomplete="off">
+  </div>
+
+  <details class="nav" id="nav">
+    <summary>נושאים</summary>
+    <div class="nav-body" id="nav-body"></div>
+  </details>
+
+  <details class="filters" id="filters">
+    <summary><span class="sum-title">סינון</span> <span class="active-count" id="active-count"></span>
+      <button class="btn" id="clear" type="button" hidden>ניקוי סינון</button></summary>
+    <div class="filters-body">
+    <div class="field">
+      <label for="topic">נושא</label>
+      <select id="topic"></select>
+    </div>
+    <div class="field">
+      <label for="sub">תת־נושא</label>
+      <select id="sub" disabled></select>
+    </div>
+    </div>
+  </details>
+
+  <div class="actions">
+    <a class="btn download" href="booklet.pdf" download="חוברת התרגילים בהסתברות.pdf">חוברת התרגילים (PDF)</a>
+    <a class="btn download" href="solutions.pdf" download="פתרונות בהסתברות.pdf"><span data-hints>רמזים ו</span>פתרונות (PDF)</a>
+  </div>
+  </aside>
+
+  <div class="content">
+  <div class="status">
+    <div id="count"></div>
+    <div id="order-note">הסעיפים מסודרים לפי סדר החומר, כמו בחוברת.</div>
+  </div>
+
+  <main id="main" aria-live="polite"></main>
+  </div>
+  </div>
+
+  <button class="btn show-side" id="show-side" type="button" aria-controls="side" aria-expanded="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    נושאים וסינון
+  </button>
+
+  <footer>
+    <div>„פתרון רשמי” נלקח מקובצי הפתרון של צוות הקורס. „פתרון שלא נבדק על ידי צוות הקורס” נכתב בנפרד ועשוי להכיל טעויות.</div>
+    <div id="footer-stats"></div>
+    <div>אוניברסיטת בן־גוריון בנגב · היחידה להוראת קורסי יסוד · קורס 214.1.9921</div>
+  </footer>
+</div>
+
+<script type="application/json" id="data">/*__DATA__*/</script>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [["\\(", "\\)"]], displayMath: [["\\[", "\\]"]], macros: /*__MACROS__*/ },
+  // SVG output, as on the exams bank site. mtextInheritFont: Hebrew in \text{...} is set by the browser as one run, right to left
+  svg: { fontCache: "global", mtextInheritFont: true },
+  startup: {
+    typeset: false,
+    ready() {
+      MathJax.startup.defaultReady();
+      MathJax.startup.promise.then(() => typeset(document.getElementById("main")));
+    }
+  }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg-full.js" async></script>
+<script>
+const DATA = JSON.parse(document.getElementById("data").textContent);
+const QUESTIONS = DATA.questions;
+const TOPICS = DATA.taxonomy.topics;
+const PAGE = 15;
+
+const topicSel = document.getElementById("topic");
+const subSel = document.getElementById("sub");
+const searchInput = document.getElementById("search");
+const main = document.getElementById("main");
+const count = document.getElementById("count");
+
+function typeset(el) {
+  if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([el]).then(() => fitMath(el)).catch(() => {});
+}
+// A display formula a little wider than its card (e.g. on a phone) shrinks to fit, down to 65%; a much wider one scrolls.
+// Formulas inside a hidden step are measured when the step opens.
+function fitMath(root) {
+  root.querySelectorAll('mjx-container[display="true"] > svg').forEach(svg => {
+    const box = svg.parentElement, avail = box.clientWidth;
+    if (!avail || svg.dataset.fit) return;
+    svg.style.width = ""; svg.style.height = "";
+    const w = svg.getBoundingClientRect().width;
+    if (w > avail + 1 && avail / w >= 0.65) { svg.style.width = avail + "px"; svg.style.height = "auto"; }
+    svg.dataset.fit = "1";
+  });
+}
+document.addEventListener("click", () => requestAnimationFrame(() => fitMath(main)));
+let fitTimer;
+addEventListener("resize", () => {
+  clearTimeout(fitTimer);
+  fitTimer = setTimeout(() => { main.querySelectorAll("svg[data-fit]").forEach(s => delete s.dataset.fit); fitMath(main); }, 250);
+});
+function el(tag, cls, html) {
+  const e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (html !== undefined) e.innerHTML = html;
+  return e;
+}
+function option(value, label) {
+  const o = document.createElement("option");
+  o.value = value; o.textContent = label;
+  return o;
+}
+const escapeHtml = s => s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+// Order: syllabus order of topic/sub, then the order of the question bank (question id, then part) -- the booklet order.
+const subOrder = {};
+TOPICS.forEach((t, i) => t.subs.forEach((s, j) => { subOrder[t.name + "|" + s] = i * 100 + j; }));
+QUESTIONS.forEach((q, i) => { q.rank = i; });
+QUESTIONS.sort((a, b) => (subOrder[a.topic + "|" + a.sub] - subOrder[b.topic + "|" + b.sub]) || (a.rank - b.rank));
+
+// Free-text search: question text without tags or formula markup, plus topic and subtopic
+const fold = s => s.toLowerCase().replace(/[\u0591-\u05C7]/g, "").replace(/\s+/g, " ");
+QUESTIONS.forEach(q => {
+  const tmp = document.createElement("div"); tmp.innerHTML = q.text;
+  q.haystack = fold([tmp.textContent, q.topic, q.sub].join(" "));
+});
+const matchesSearch = (q, words) => words.every(w => q.haystack.includes(w));
+
+// Header stats
+const nOfficial = QUESTIONS.filter(q => q.solution && q.solution.official).length;
+const nSolved = QUESTIONS.filter(q => q.solution).length;
+const nHints = QUESTIONS.filter(q => q.hint).length;
+document.getElementById("stats").innerHTML =
+  `<span><strong>${new Set(QUESTIONS.map(q => q.qid)).size}</strong> תרגילים</span>` +
+  `<span><strong>${QUESTIONS.length}</strong> סעיפים</span>` +
+  (nHints ? `<span><strong>${nHints}</strong> רמזים</span>` : "");
+// Texts about hints show only once some exercise has one
+document.querySelectorAll("[data-hints]").forEach(e => { e.hidden = !nHints; });
+document.querySelectorAll("[data-nohints]").forEach(e => { e.hidden = !!nHints; });
+document.getElementById("footer-stats").textContent =
+  `לכל ${nSolved} מתוך ${QUESTIONS.length} הסעיפים יש פתרון. ${nOfficial} מהפתרונות רשמיים.`;
+
+topicSel.append(option("", "כל הנושאים"), ...TOPICS.map(t => option(t.name, t.name)));
+function fillSubs() {
+  const t = TOPICS.find(t => t.name === topicSel.value);
+  subSel.replaceChildren(option("", "כל תתי־הנושאים"), ...(t ? t.subs.map(s => option(s, s)) : []));
+  subSel.disabled = !t;
+}
+
+// Sidebar topic navigation: chapters fold open to their subtopics, with counts
+function renderNav() {
+  const pool = QUESTIONS;
+  const body = document.getElementById("nav-body");
+  const all = el("button", "nav-all", "כל התרגילים");
+  all.type = "button";
+  all.addEventListener("click", () => { topicSel.value = ""; fillSubs(); render(); scrollToList(); });
+  body.replaceChildren(all);
+  TOPICS.forEach(t => {
+    const inTopic = pool.filter(q => q.topic === t.name);
+    if (!inTopic.length) return;
+    const d = el("details", "nav-topic");
+    d.open = topicSel.value === t.name;
+    const s = el("summary", "", `${t.name} <span>${inTopic.length}</span>`);
+    s.addEventListener("click", () => { if (!d.open) { topicSel.value = t.name; fillSubs(); render(); scrollToList(); } });
+    const subs = el("div", "nav-subs");
+    t.subs.forEach(sub => {
+      const n = inTopic.filter(q => q.sub === sub).length;
+      if (!n) return;
+      const b = el("button", "nav-sub", `<span>${sub}</span><b>${n}</b>`);
+      b.type = "button";
+      b.setAttribute("aria-current", String(topicSel.value === t.name && subSel.value === sub));
+      b.addEventListener("click", () => { topicSel.value = t.name; fillSubs(); subSel.value = sub; render(); scrollToList(); });
+      subs.append(b);
+    });
+    d.append(s, subs);
+    body.append(d);
+  });
+}
+const narrow = () => !matchMedia("(min-width: 1100px)").matches;
+// On a phone the sidebar sits above the list: after picking a topic, jump down to the exercises.
+function scrollToList() { if (narrow()) document.querySelector(".content").scrollIntoView({ behavior: "smooth" }); }
+
+function card(q) {
+  const c = el("article", "q");
+  const meta = el("div", "meta");
+  meta.append(el("span", "chip", q.topic), el("span", "chip sub", q.sub));
+  if (q.suggested) { c.classList.add("suggested"); meta.append(el("span", "badge suggested", "הצעה חדשה, טרם אושרה")); }
+  c.append(meta);
+  // The exercise number, the same as in both PDF booklets
+  c.append(el("h2", "source", q.book ? `תרגיל ${q.book}` : "הצעה חדשה"));
+  c.append(el("div", "q-text", q.text));
+  if (q.notes) c.append(el("div", "note", q.notes));
+
+  // A hint (optional) comes before the solution: its button sits first in the row.
+  const row = el("div", "btn-row");
+  let hintBox = null;
+  if (q.hint) {
+    const hb = el("button", "toggle hint-btn");
+    hb.type = "button"; hb.textContent = "קבלת רמז";
+    hb.setAttribute("aria-expanded", "false");
+    hintBox = el("div", "hint", `<b>רמז:</b> ${q.hint}`);
+    hintBox.hidden = true;
+    let typeset1 = false;
+    hb.addEventListener("click", () => {
+      const open = hintBox.hidden;
+      hintBox.hidden = !open;
+      hb.setAttribute("aria-expanded", String(open));
+      hb.textContent = open ? "הסתר רמז" : "קבלת רמז";
+      if (open && !typeset1) { typeset1 = true; typeset(hintBox); }
+    });
+    row.append(hb);
+  }
+  const btn = el("button", "toggle");
+  btn.type = "button";
+  row.append(btn);
+  if (!q.solution) {
+    btn.textContent = "אין עדיין פתרון לשאלה זו";
+    btn.disabled = true;
+    c.append(row);
+    if (hintBox) c.append(hintBox);
+    return c;
+  }
+  const sid = "sol-" + q.id;
+  btn.textContent = "הצג פתרון";
+  btn.setAttribute("aria-expanded", "false");
+  btn.setAttribute("aria-controls", sid);
+  const sol = el("section", "solution");
+  sol.id = sid; sol.hidden = true;
+  const s = q.solution;
+  sol.append(el("div", "sol-head", `<h3>פתרון</h3>` + (s.official
+    ? `<span class="badge official">פתרון רשמי</span>`
+    : s.reviewed ? `<span class="badge official">נבדק על ידי צוות הקורס</span>`
+    : `<span class="badge unofficial">פתרון שלא נבדק על ידי צוות הקורס</span>`)));
+  const steps = el("ol", "steps", s.steps.map(x => `<li>${x}</li>`).join(""));
+  const ans = s.answer ? el("div", "answer", `<span>תשובה:</span>${s.answer}`) : null;
+  sol.append(steps);
+  if (ans) sol.append(ans);
+  // Solutions open one step at a time; the student clicks to reveal each further step.
+  {
+    const parts = [...steps.children, ...(ans ? [ans] : [])];
+    let shown = 1;
+    parts.forEach((p, i) => { p.hidden = i >= shown; });
+    if (parts.length > 1) {
+      sol.classList.add("stepwise");
+      const next = el("button", "btn next");
+      const all = el("button", "btn next");
+      next.type = all.type = "button";
+      all.textContent = "הצג את כל הפתרון";
+      const label = () => {
+        next.textContent = ans && shown === parts.length - 1
+          ? "הצג את התשובה הסופית"
+          : `הצג שלב נוסף (${shown} מתוך ${steps.children.length})`;
+      };
+      label();
+      const finish = () => { brow.hidden = true; };
+      next.addEventListener("click", () => {
+        parts[shown++].hidden = false;
+        if (shown < parts.length) label(); else finish();
+      });
+      all.addEventListener("click", () => { parts.forEach(p => { p.hidden = false; }); shown = parts.length; finish(); });
+      const brow = el("div", "btn-row");
+      brow.append(next, all);
+      sol.append(brow);
+    }
+  }
+  let done = false;
+  btn.addEventListener("click", () => {
+    const open = sol.hidden;
+    sol.hidden = !open;
+    btn.setAttribute("aria-expanded", String(open));
+    btn.textContent = open ? "הסתר פתרון" : "הצג פתרון";
+    if (open && !done) { done = true; typeset(sol); }
+  });
+  c.append(row);
+  if (hintBox) c.append(hintBox);
+  c.append(sol);
+  return c;
+}
+
+// Items are shown in pages; a heading is inserted whenever the chapter changes.
+function renderList(items) {
+  const list = el("div", "list");
+  main.replaceChildren(list);
+  let shown = 0, last = null;
+  const more = el("button", "btn more");
+  more.type = "button";
+  function page() {
+    const chunk = el("div", "list");
+    items.slice(shown, shown + PAGE).forEach(q => {
+      const key = q.topic;
+      if (key !== last) {
+        last = key;
+        chunk.append(el("h2", "chapter-head", key));
+      }
+      chunk.append(card(q));
+    });
+    shown = Math.min(items.length, shown + PAGE);
+    list.append(chunk);
+    typeset(chunk);
+    more.hidden = shown >= items.length;
+    more.textContent = `הצג עוד סעיפים (${items.length - shown} נותרו)`;
+  }
+  more.addEventListener("click", page);
+  page();
+  main.append(more);
+}
+
+function render() {
+  const topic = topicSel.value, sub = subSel.value;
+  const words = fold(searchInput.value.trim()).split(" ").filter(Boolean);
+  const nActive = [topicSel, subSel].filter(x => x.value).length + (words.length ? 1 : 0);
+  document.getElementById("active-count").textContent = nActive ? `${nActive} פעילים` : "";
+  document.getElementById("clear").hidden = !nActive;
+  renderNav();
+  const items = QUESTIONS.filter(q => (!topic || q.topic === topic) && (!sub || q.sub === sub) &&
+    (!words.length || matchesSearch(q, words)));
+  count.innerHTML = words.length
+    ? `נמצאו <strong>${items.length}</strong> סעיפים עבור „${escapeHtml(searchInput.value.trim())}”`
+    : `מוצגים <strong>${items.length}</strong> סעיפים`;
+  if (!items.length) {
+    main.replaceChildren(el("p", "empty", words.length
+      ? "לא נמצאו סעיפים שמכילים את כל המילים האלה. נסו מילה אחרת או קצרה יותר, או נקו את הסינון."
+      : "אין סעיפים שמתאימים לסינון הזה. בחרו תת־נושא אחר או נקו את הסינון."));
+    return;
+  }
+  renderList(items);
+}
+
+topicSel.addEventListener("change", () => { fillSubs(); render(); });
+subSel.addEventListener("change", render);
+let searchTimer;
+searchInput.addEventListener("input", () => { clearTimeout(searchTimer); searchTimer = setTimeout(render, 200); });
+function clearFilters() { searchInput.value = ""; topicSel.value = ""; fillSubs(); render(); }
+// The clear button sits in the summary line: don't let the click also fold the panel.
+document.getElementById("clear").addEventListener("click", e => { e.preventDefault(); clearFilters(); });
+
+// Wide screens: topics and filters start open. Narrow screens: folded, so the exercises come first.
+if (!narrow()) { document.getElementById("nav").open = true; document.getElementById("filters").open = true; }
+
+// Hiding the sidebar (wide screens only) is remembered in this browser.
+const SIDE_KEY = "exercises-9921-side-hidden";
+const wrapEl = document.querySelector(".wrap");
+function setSideHidden(hidden, remember) {
+  wrapEl.classList.toggle("side-hidden", hidden);
+  document.getElementById("hide-side").setAttribute("aria-expanded", String(!hidden));
+  document.getElementById("show-side").setAttribute("aria-expanded", String(!hidden));
+  if (remember) try { localStorage.setItem(SIDE_KEY, hidden ? "1" : ""); } catch {}
+}
+document.getElementById("hide-side").addEventListener("click", () => {
+  setSideHidden(true, true); document.getElementById("show-side").focus();
+});
+document.getElementById("show-side").addEventListener("click", () => {
+  setSideHidden(false, true); searchInput.focus();
+});
+try { if (localStorage.getItem(SIDE_KEY)) setSideHidden(true, false); } catch {}
+fillSubs();
+render();
+</script>

@@ -1,0 +1,271 @@
+%\input{systeme}
+\usepackage[a4paper, top=4cm,left=2.5cm, right=2.3cm, bottom=2.7cm]{geometry}
+\usepackage{amsmath, amssymb, array, multicol}
+\usepackage{comment, graphicx}  
+\usepackage{pdfpages}
+\usepackage{tikz}
+\usepackage{fontspec}
+
+\usepackage{pdfpages}
+%\usepackage{xunicode}  % Hebrew character encoding
+\usepackage{polyglossia}
+\setmainlanguage{hebrew}
+\usepackage{fontspec}
+\setmainfont{David CLM}
+\usepackage{bidi}
+\usepackage{enumitem}
+
+\usepackage{braket}
+%\usepackage{xparse}
+%\DeclareGraphicsExtensions{.png,.jpg}
+%\usepackage{pgffor}  % for loops in latex
+%\usepackage{ifthen}  % conditional latex compilation
+%\usepackage{todonotes}  % notes in bright orange
+%\usepackage[colorlinks=true]{hyperref}  % hyperlinks
+%\AtBeginDocument{% coloring of links
+%	\hypersetup{pdfborder={0 0 0},
+%		urlcolor=blue}%
+%}
+\usepackage[absolute]{textpos}   % Proper positioning of images, e.g. BGU logo
+%\setdefaultlanguage{hebrew}
+%\setotherlanguage{english}
+%\setmainfont{David CLM}
+%\newfontfamily\hebrewfont[Script=Hebrew]{Times New Roman}
+\setmainfont{David CLM}
+
+%\makeatletter
+%\def\tagform@#1{\maketag@@@{(\ignorespaces#1\unskip)}}
+%\makeatother
+
+
+%\makeatletter
+%\renewcommand{\SepMark}[1]{\def\@SepMark{#1}}
+%\makeatother
+%\SepMark{.}
+%\robustify\hebrewnumeral
+%\robustify\Hebrewnumeral
+%\robustify\Hebrewnumeralfinal
+
+%\def\urladdrname{{\itshape כתובת רשת}}
+%\def\emailaddrname{{\itshape כתובת דואל}}
+
+%\makeatletter
+%\let\orig@MakeUppercase \MakeUppercase
+%\makeatother
+%\providecommand{\MakeUppercase}[1]{#1}
+
+\fontsize{14}{15}  
+
+\setdefaultlanguage{hebrew}
+\setotherlanguage{english}
+\thispagestyle{empty}
+\selectlanguage{hebrew}
+
+\newcommand{\cc}{\mathbb{C}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\rr}{\mathbb{R}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\nn}{\mathbb{N}}
+\newcommand{\zz}{\mathbb{Z}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\qq}{\mathbb{Q}}
+\newcommand{\FF}{\mathbb{F}}
+\newcommand{\QQ}{\mathbb{Q}}
+\DeclareMathOperator{\vol}{vol}
+\newcommand{\abs}[1]{\left|#1\right|}
+
+\DeclareMathOperator{\Adj}{Adj}
+\DeclareMathOperator{\deter}{det}
+\DeclareMathOperator{\Img}{Im}
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\Span}{Span}
+\DeclareMathOperator{\tr}{tr}
+
+
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\calE}{\mathcal{E}}
+\newcommand{\ntn}{n\times n}
+\newcommand{\mtn}{m\times n}
+\newcommand{\limn}{\lim_{n\to\infty}}
+
+%%%% new for complex functions
+
+\newcommand{\Arg}{\mathrm{Arg}}
+\newcommand{\ol}{\overline}
+\newcommand{\wt}{\widetilde}
+\newcommand{\wh}{\widehat}
+\newcommand{\re}{\mathrm{Re}}
+\newcommand{\im}{\mathrm{Im}}
+\newcommand{\goes}{\longrightarrow}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\Log}{\mathrm{Log}}
+
+
+
+\def\I{\mathbb I}
+\def\Q{\mathbb Q}
+\def\F{\mathbb F}
+\def\H{\mathbb H}
+\def\HH{\mathcal H}
+\def\PP{\mathcal P}
+\def\cB{\mathcal B}
+\def\cC{\mathcal C}
+\def\cD{\mathcal D}
+\def\cE{\mathcal E}
+\def\mfp{\mathfrak p}
+\def\mfm{\mathfrak m}
+\def\GL{\operatorname{GL}}
+\def\SL{\operatorname{SL}}
+\def\Aut{\operatorname{Aut}}
+\def\Af{\operatorname{Aff}}
+\def\Gal{\operatorname{Gal}}
+\def\Alt{\operatorname{Alt}}
+\def\adj{\operatorname{Adj}}
+\def\Sym{\operatorname{Sym}}
+\def\Adj{\operatorname{Adj}}
+\def\ord{\operatorname{ord}}
+\def\sgn{\operatorname{sgn}}
+\def\id{\operatorname{id}}
+\def\tr{\operatorname{tr}}
+\def\chr{\operatorname{char}}
+\def\Ann{\operatorname{Ann}}
+\def\Inn{\operatorname{Inn}}
+\def\Hom{\operatorname{Hom}}
+\def\Tor{\operatorname{Tor}}
+\def\Rad{\operatorname{Rad}}
+\def\Syl{\operatorname{Syl}}
+\def\Hall{\operatorname{Hall}}
+\def\ch{\operatorname{ch}}
+\def\sp{\operatorname{Span}}
+\def\Cay{\operatorname{Cay}}
+\def\rank{\operatorname{rank}}
+\def\cis{\operatorname{cis}}
+\def\Geo{\operatorname{Geo}}
+\def\Bin{\operatorname{Bin}}
+\def\Ber{\operatorname{Ber}}
+\def\sq{\subseteq}
+\def\sqb{{\sss \char4}}
+\def\emptyset{\mbox{\rm \O}}
+\def\es{\emptyset}
+\def\angle{<\!\!\!) \,\,}
+\def\const{\mbox{\rm const}\,}
+\def\lcm{\mbox{\L{\rm lcm}}\,}
+\def\ga{\alpha}
+\def\gb{\beta}
+\def\gm{\gamma}
+\def\gG{\Gamma}
+\def\gf{\varphi}
+\def\eps{\varepsilon}
+\def\gd{\delta}
+\def\gD{\Delta}
+\def\s{\sigma}
+\def\d{\partial}
+\def\la{\lambda}
+\def\La{\Lambda}
+\def\Om{\Omega}
+\def\om{\omega}
+\def\gS{\Sigma}
+\def\lenq{\lvertneqq}
+\def\genq{\gvertneqq}
+\def\ra{\Longrightarrow}
+\def\cl{\centerline}
+\def\ds{\displaystyle}
+\def\ts{\dtextstyle}
+\def\scr{\scriptsize}
+\def\f{\frac}
+\def\thefootnote{*}
+\def\bs{\baselineskip}
+\def\nbs{\normalbaselineskip}
+\def\f5{{$\hskip 5pt$}}
+\def\hqq{{\hskip 24pt}}
+\def\hq{{\hskip 12pt}}
+\def\longto{\mathop{\longrightarrow}\limits}
+\def\mod{\mathop{\rm mod}\nolimits}
+\def\cs{\choose}
+\def\mbox{\hbox}
+\def\se{\subseteq}
+\def\qskip{\vskip 12pt}
+\def\nl{\hfill\break}
+\def\vbreak{\vfill\break}
+\def\ol{\overline}
+\def\sd{\triangle}
+\def\sm{\smallsetminus}
+\def\nin{\not\in}
+\def\gg{\Gamma}
+\def\omod#1{({\rm mod}\,\,#1)}
+\def\qu{\qskip\item}
+\def\bE{\begin{enumerate}}
+\def\eE{\end{enumerate}}
+\def\emq{\hskip 1in}
+\def\p{\varphi}
+\def\a{\forall}
+\def\e{\operatorname{e}}
+\def\z{\mathit{z}}
+\def\h{\wedge}
+\def\v{\vee}
+\def\lcc{\langle}
+\def\rcc{\rangle}
+\def\gl{\mathbf {GL}}
+\def\ker{\operatorname{ker}}
+\def\mi{\operatorname{Im}}
+\def\er{\operatorname{Re}}
+\def\im{\mathbf{im}}
+\def\norm{\trianglelefteq}
+\newcommand{\Aro}{\Rightarrow}
+\renewcommand{\atop}[2]{\genfrac{}{}{0pt}{1}{#1}{#2}}
+\newcommand{\too}{\longrightarrow}
+\renewcommand{\iff}[1]{\Longleftrightarrow}
+\newcommand{\then}[1]{\hspace{#1}\Rightarrow\hspace{#1}}
+\newcommand{\bcs}[2]{\genfrac{\{}{\}}{0pt}{1}{#1}{#2}}
+\newcommand{\px}[1]{\begin{pmatrix}#1\end{pmatrix}}
+\newcommand{\sx}[1]{\begin{bmatrix}#1\end{bmatrix}}
+\newcommand{\dotcup}{\ensuremath{\mathaccent\cdot\cup}}
+\newcommand{\cnt}[1]{\begin{center}#1\end{center}}
+\newcommand{\cntl}[1]{\begin{center}\underline{#1}\end{center}}
+\newcommand{\lfrac}[2]{\mathlarger{\frac{#1}{#2}}}
+\newcommand{\aro}{\rightarrow}
+\newcommand{\normal}{\trianglelefteq}
+\newcommand{\spc}{\hspace{2 mm}}
+\newcommand{\spcc}{\hspace{5 mm}}
+\newcommand{\Spc}{\hspace{10 mm}}
+\newcommand{\ff}{\varphi}
+\newcommand{\cd}{\cdots}
+\newcommand{\ml}[1]{\mathlarger{#1}}
+\newcommand{\suml}[1]{\mathlarger{\sum #1}}
+\newcommand{\intl}[1]{\mathlarger{\int #1}}
+\newcommand{\norma}[1]{\abs{\abs{#1}}}
+\newcommand{\lr}[1]{\left(#1\right)}
+\newcommand{\lsr}[1]{\left[#1\right]}
+\newcommand{\rseq}[3]{\left(#1_#2\right)_{#2=#3}^\infty}
+\newcommand{\gen}[1]{\left\langle #1\right\rangle}
+\newcommand{\seq}[3]{\gen{#1_#2}_{#2=#3}^\infty}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\case}[2]{\left\{\begin{array}{#1} #2 \end{array}\right.}
+\newcommand{\bit}{\begin{itemize}}
+\newcommand{\eit}{\end{itemize}}
+\newcommand{\bM}[1]{\begin{multicols}{#1}}
+\newcommand{\eM}{\end{multicols}}
+\newcommand{\bT}[1]{\begin{tasks}(#1)}
+\newcommand{\eT}{\end{tasks}}
+
+
+\newcommand{\headers}{
+\thispagestyle{empty}
+\begin{textblock*}{9cm}[0.5,0.5](90mm,3cm)
+	\includegraphics[width=2in]{preamble/logo.jpg}
+\end{textblock*}	
+
+\begin{center}
+	\large	
+היחידה להוראת קורסי יסוד - 
+	\semester \\
+	{\large \bf \course\ - 214.1.9921}\\
+	\medskip
+	{\Large  \textbf{\doctype}  }\\
+\end{center}
+\vspace{0.3cm}
+}

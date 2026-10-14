@@ -1,0 +1,84 @@
+# Builds the booklets and the site from the question files.
+# On a pull request: builds and checks only (the PDFs are attached to the run as an artifact).
+# On main: builds and commits index.html, the generated .tex files and the two PDFs back to main,
+# so GitHub Pages always serves what the question files say.
+name: Build booklets and site
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'questions/**'
+      - 'structure.txt'
+      - 'make_bank.py'
+      - 'make_site.py'
+      - 'site/**'
+      - 'preamble/**'
+      - 'bank-setup.tex'
+      - 'booklet-header.tex'
+      - '.github/workflows/build.yml'
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install XeLaTeX and the Culmus fonts (David CLM, Ubuntu package culmus)
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q --no-install-recommends \
+            texlive-xetex texlive-latex-recommended texlive-latex-extra \
+            texlive-pictures texlive-lang-other texlive-lang-arabic texlive-science \
+            texlive-fonts-recommended \
+            culmus lmodern
+          fc-list | grep -q "David CLM" || { echo "David CLM font not found"; exit 1; }
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Generate the .tex files and the site
+        run: |
+          python3 make_bank.py
+          (cd site && npm ci --no-audit --no-fund)
+          python3 make_site.py --check
+
+      - name: Compile the booklets
+        run: |
+          for doc in booklet solutions; do
+            for run in 1 2; do
+              xelatex -interaction=nonstopmode -halt-on-error "$doc.tex" > /dev/null \
+                || { tail -n 40 "$doc.log"; exit 1; }
+            done
+          done
+
+      - name: Attach the PDFs to the run
+        uses: actions/upload-artifact@v4
+        with:
+          name: booklets
+          path: |
+            booklet.pdf
+            solutions.pdf
+
+      - name: Commit the build to main
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898732+github-actions[bot]@users.noreply.github.com"
+          git add index.html booklet.tex solutions.tex bank.tex catalog.md booklet.pdf solutions.pdf
+          if git diff --cached --quiet; then
+            echo "nothing changed"
+          else
+            git commit -m "Build booklets and site from ${GITHUB_SHA::7}"
+            git push
+          fi

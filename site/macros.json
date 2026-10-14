@@ -1,0 +1,22 @@
+{
+  "N": "\\mathbb{N}", "Z": "\\mathbb{Z}", "Q": "\\mathbb{Q}", "R": "\\mathbb{R}",
+  "PP": "\\mathbb{P}", "E": "\\mathbb{E}",
+  "Var": "\\operatorname{Var}",
+  "Ber": "\\operatorname{Ber}", "Bin": "\\operatorname{Bin}", "Geo": "\\operatorname{Geo}", "Poi": "\\operatorname{Poi}",
+  "set": ["\\left\\{#1\\right\\}", 1],
+  "setof": ["\\left\\{\\,#1 \\;\\middle|\\; #2\\,\\right\\}", 2],
+  "comp": ["\\overline{#1}", 1],
+  "symdiff": "\\mathbin{\\triangle}",
+  "Pow": "\\mathcal{P}",
+  "emptyset": "\\varnothing",
+  "ans": ["\\boxed{#1}", 1],
+  "rr": "\\mathbb{R}", "RR": "\\mathbb{R}", "nn": "\\mathbb{N}", "zz": "\\mathbb{Z}", "ZZ": "\\mathbb{Z}",
+  "qq": "\\mathbb{Q}", "QQ": "\\mathbb{Q}",
+  "limn": "\\lim_{n\\to\\infty}",
+  "ds": "\\displaystyle",
+  "eps": "\\varepsilon",
+  "abs": ["\\left|#1\\right|", 1],
+  "lr": ["\\left(#1\\right)", 1],
+  "lsr": ["\\left[#1\\right]", 1],
+  "floor": ["\\left\\lfloor#1\\right\\rfloor", 1]
+}

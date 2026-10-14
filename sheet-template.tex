@@ -1,0 +1,34 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% תבנית לבניית דף תרגילים מתוך המאגר.
+% 1. העתיקו את הקובץ (למשל ל-sheets/ex03.tex) -- או ערכו אותו כאן.
+% 2. בחרו שאלות מ-catalog.md והוסיפו שורת \item\input{...} לכל אחת.
+% 3. קמפלו ב-XeLaTeX. \solfalse = דף לסטודנטים, \soltrue = דף פתרונות.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newif\ifsol
+\solfalse
+%\soltrue
+\documentclass[12pt, a4paper]{article}
+\usepackage[most]{tcolorbox}   % חייב להיטען לפני ה-preamble (bidi)
+\input{preamble/MotkePreamble}
+\input{bank-setup}
+
+\newcommand{\semester}{סמסטר א' תשפ״ז}
+\newcommand{\course}{הסתברות לסטטיסטיקה}
+\newcommand{\doctype}{%
+\boxed{\text{
+ דף  תרגילים 3
+- משתנים מקריים מוכרים
+\ifsol - פתרונות\fi}}}
+
+\begin{document}
+\selectlanguage{hebrew}
+\headers
+
+\begin{enumerate}
+\item \input{questions/02-sequences/seq-007}
+\item \input{questions/02-sequences/seq-009}
+\ifsol\newpage\fi
+\item \input{questions/02-sequences/seq-011}
+\end{enumerate}
+
+\end{document}

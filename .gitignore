@@ -1,0 +1,16 @@
+*.aux
+*.log
+*.toc
+*.out
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+*.xdv
+__pycache__/
+site/node_modules/
+build/
+# previews with the suggested questions (they stay in the private repo until approved)
+preview.html
+bank-preview.*
+# the full bank is a staff tool, built locally: xelatex bank.tex
+bank.pdf

@@ -1,0 +1,116 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% הגדרות משותפות למאגר ולדפי התרגילים שנבנים ממנו.
+% נטען אחרי preamble/MotkePreamble, ודורש ש-\ifsol יוגדר לפני \documentclass:
+%     \newif\ifsol
+%     \soltrue      % או \solfalse
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\tcbuselibrary{theorems,breakable}
+\usepackage{comment}
+\usepackage{needspace}
+\usetikzlibrary{calc}
+\usetikzlibrary{arrows.meta}
+
+% רמז לסעיף: \hint{...} בשורה נפרדת, לפני ה-solbox של הסעיף.
+% במאגר (\soltrue) הרמז מודפס בכחול; בחוברת לסטודנטים (\solfalse) הוא מוסתר, ובאתר הוא נפתח בלחיצה.
+\ifsol
+\newcommand{\hint}[1]{\par{\small\color{blue!55!black}\textbf{רמז:}\enskip #1}\par\smallskip}
+\else
+\newcommand{\hint}[1]{}
+\fi
+
+\ifsol
+\newtcolorbox{solbox}{
+    enhanced,
+    breakable,
+    colback=gray!8,
+    borderline east={2pt}{0pt}{gray!80},
+    borderline west={0.3pt}{0pt}{gray!80},
+    borderline north={0.3pt}{0pt}{gray!80},
+    borderline south={0.3pt}{0pt}{gray!80},
+    frame hidden,
+    sharp corners,
+    fontupper=\small,
+    before upper={\textbf{פיתרון:}\enskip},
+    grow to left by=0cm,
+    grow to right by=0cm}
+\else
+\excludecomment{solbox}
+\fi
+
+\newcommand{\lvec}{\overrightarrow}
+\renewcommand{\labelitemi}{$\diamond$}
+
+% שם הקובץ של השאלה, בקצה השמאלי של השורה שמעליה (משמש ב-bank.tex).
+% את השם הזה כותבים ב-\input כדי לשלב את השאלה בדף תרגילים.
+\newcommand{\qtag}[1]{{\footnotesize\color{gray}\hfill קובץ: \textenglish{\ttfamily #1}}\par\nopagebreak[4]\smallskip}
+\newcommand{\bankq}[2]{\item \qtag{#1}\input{#2}}
+
+% \R{...} (טקסט עברי בתוך נוסחה) מגיע מ-babel ואינו מוגדר ב-MotkePreamble
+\providecommand{\R}[1]{\RL{#1}}
+
+% הפניה לשאלה אחרת במאגר לפי המזהה שלה, למשל \qref{int-013}
+\newcommand{\qref}[1]{\textenglish{#1}}
+
+% שאלה שהוצעה כדי לסגור פער בין מאגר המבחנים לדפי התרגילים (נכתבה ע"י Claude, טרם אושרה).
+% כל הקובץ עטוף בסביבה הזו, ולכן השאלה מופיעה בתיבה ורודה בכל מקום שמשלבים אותה.
+% לאחר אישור -- מוחקים את \begin{suggested} ואת \end{suggested}, ואת השורה "% suggested: yes" מכותרת הקובץ.
+% עד אז השאלה מופיעה במאגר (bank.pdf) בלבד, ולא בחוברת לסטודנטים ולא באתר.
+\definecolor{suggestpink}{RGB}{214,51,132}
+\newtcolorbox{suggested}{
+    enhanced,
+    breakable,
+    colback=suggestpink!7,
+    colframe=suggestpink!70,
+    boxrule=0.6pt,
+    arc=2pt,
+    left=6pt, right=6pt, top=4pt, bottom=4pt,
+    before skip=2pt,
+    before upper={{\color{suggestpink}\small\textbf{הצעה חדשה -- שאלה שנכתבה כדי לסגור פער מול מאגר המבחנים (טרם אושרה)}}\par\smallskip}}
+
+% סימון לפתרון שעדיין לא נבדק ואושר (נכתב ע"י Claude). לאחר בדיקה -- מוחקים את השורה
+% \unverified מתוך ה-solbox ואת השורה "% verified: no" מכותרת הקובץ.
+\newcommand{\unverified}{{\color{red}\textbf{[טיוטה -- פתרון שטרם נבדק]}}\par}
+
+% סעיפים בשתי עמודות -- רק בגרסה ללא פתרונות (בחוברת לסטודנטים).
+% בגרסה עם פתרונות הסעיפים נשארים בעמודה אחת, כדי שהפתרונות לא יידחסו.
+% שימוש: \begin{enumerate}\bMs{2} \item ... \eMs\end{enumerate}
+\setlength{\multicolsep}{4pt plus 2pt minus 1pt}
+\newcommand{\bMs}[1]{\ifsol\else\begin{multicols}{#1}\fi}
+\newcommand{\eMs}{\ifsol\else\end{multicols}\fi}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% פקודות של הקורס בהסתברות. אותן פקודות מוגדרות לאתר ב-site/macros.json.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\providecommand{\N}{} \renewcommand{\N}{\mathbb{N}}
+\providecommand{\set}{} \renewcommand{\set}[1]{\left\{#1\right\}}
+\providecommand{\setof}{} \renewcommand{\setof}[2]{\left\{\,#1 \;\middle|\; #2\,\right\}}
+\providecommand{\symdiff}{} \renewcommand{\symdiff}{\mathbin{\triangle}}
+\providecommand{\comp}{} \renewcommand{\comp}[1]{\overline{#1}}
+\providecommand{\Pow}{} \renewcommand{\Pow}{\mathcal{P}}
+\renewcommand{\emptyset}{\varnothing}
+\providecommand{\PP}{} \renewcommand{\PP}{\mathbb{P}}
+\providecommand{\E}{} \renewcommand{\E}{\mathbb{E}}
+\providecommand{\Var}{} \renewcommand{\Var}{\operatorname{Var}}
+\providecommand{\Ber}{} \renewcommand{\Ber}{\mathrm{Ber}}
+\providecommand{\Bin}{} \renewcommand{\Bin}{\mathrm{Bin}}
+\providecommand{\Geo}{} \renewcommand{\Geo}{\mathrm{Geo}}
+\providecommand{\Poi}{} \renewcommand{\Poi}{\mathrm{Poi}}
+% התשובה הסופית של סעיף, במסגרת
+\providecommand{\ans}{} \renewcommand{\ans}[1]{\boxed{#1}}
+
+% דיאגרמת ון לשלוש קבוצות A, B, C. הארגומנט הראשון מונה את האזורים הצבועים: 1 = בתוך הקבוצה,
+% 0 = מחוצה לה (לפי הסדר A/B/C). למשל \venn{1/1/0,0/1/1}{(ג)}. באתר הדיאגרמה מצוירת ב-SVG.
+\definecolor{venncolor}{RGB}{35,72,168}
+\newcommand{\vclip}[2]{\ifnum#2=1\relax\begin{scope}\clip #1;\else
+  \begin{scope}[even odd rule]\clip (-1.6,-2.75) rectangle (3.0,1.65) #1;\fi}
+\newcommand{\vennatom}[3]{\vclip{\vA}{#1}\vclip{\vB}{#2}\vclip{\vC}{#3}%
+  \fill[venncolor!30] (-1.6,-2.75) rectangle (3.0,1.65);\end{scope}\end{scope}\end{scope}}
+\newcommand{\venn}[2]{%
+\begin{tikzpicture}[scale=0.42,baseline=(current bounding box.center)]
+  \def\vA{(0,0) circle (1.1)}\def\vB{(1.4,0) circle (1.1)}\def\vC{(0.7,-1.15) circle (1.1)}
+  \foreach \a/\b/\c in {#1} {\vennatom{\a}{\b}{\c}}
+  \draw (-1.6,-2.75) rectangle (3.0,1.65);
+  \draw[thick]\vA; \draw[thick]\vB; \draw[thick]\vC;
+  \node at (-0.55,0.55) {\scriptsize $A$}; \node at (1.95,0.55) {\scriptsize $B$}; \node at (0.7,-1.85) {\scriptsize $C$};
+  \node[below] at (0.7,-2.75) {\small #2};
+\end{tikzpicture}}

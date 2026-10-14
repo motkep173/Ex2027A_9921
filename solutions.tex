@@ -1,0 +1,69 @@
+% קובץ זה נוצר אוטומטית ע"י make_bank.py -- אל תערכו אותו ידנית.
+% חוברת הרמזים והפתרונות לסטודנטים: רמזים (בלי פתרונות), ואחריהם התרגילים עם הפתרונות.
+% מספרי התרגילים זהים למספרים בחוברת התרגילים (booklet.tex).
+\newif\ifsol
+\soltrue
+\documentclass[12pt, a4paper]{article}
+\usepackage[most]{tcolorbox}   % חייב להיטען לפני ה-preamble (bidi)
+\input{preamble/MotkePreamble}
+\input{bank-setup}
+\newcommand{\bookletkind}{פתרונות}
+\newcommand{\bookletsitenote}{באתר התרגול הפתרונות נפתחים בלחיצה, שלב אחר שלב.}
+\input{booklet-header}
+% פתרון שעדיין לא נבדק מסומן כך, כמו באתר
+\renewcommand{\unverified}{{\color{bkgray}\small\textbf{פתרון שלא נבדק על ידי צוות הקורס}}\par}
+
+\begin{document}
+\selectlanguage{hebrew}
+\booklettitlepage
+{\small\tableofcontents}
+
+\expandafter\def\csname qref@sets-001\endcsname{1}
+\expandafter\def\csname qref@comb-001\endcsname{2}
+\expandafter\def\csname qref@comb-002\endcsname{3}
+\expandafter\def\csname qref@comb-003\endcsname{4}
+\expandafter\def\csname qref@prob-001\endcsname{5}
+\expandafter\def\csname qref@prob-002\endcsname{6}
+\expandafter\def\csname qref@cond-001\endcsname{7}
+\expandafter\def\csname qref@rv-001\endcsname{8}
+\expandafter\def\csname qref@rv-002\endcsname{9}
+\expandafter\def\csname qref@rv-003\endcsname{10}
+\expandafter\def\csname qref@rv-004\endcsname{11}
+\expandafter\def\csname qref@rv-005\endcsname{12}
+\expandafter\def\csname qref@exp-001\endcsname{13}
+\expandafter\def\csname qref@exp-002\endcsname{14}
+\expandafter\def\csname qref@exp-003\endcsname{15}
+\expandafter\def\csname qref@exp-004\endcsname{16}
+\renewcommand{\qref}[1]{\ifcsname qref@#1\endcsname\csname qref@#1\endcsname\else\textenglish{#1}\fi}
+\renewcommand{\hint}[1]{}   % the hints were listed above
+\setcounter{section}{0}
+
+
+\bookq[\section{תורת הקבוצות ומאורעות}]{questions/01-sets/sets-001}
+
+
+\bookq[\section{קומבינטוריקה}]{questions/02-combinatorics/comb-001}
+\bookq[]{questions/02-combinatorics/comb-002}
+\bookq[]{questions/02-combinatorics/comb-003}
+
+
+\bookq[\section{מבוא להסתברות}]{questions/03-probability/prob-001}
+\bookq[]{questions/03-probability/prob-002}
+
+
+\bookq[\section{הסתברות מותנית ואי-תלות}]{questions/04-conditional/cond-001}
+
+
+\bookq[\section{משתנים מקריים}]{questions/05-random-variables/rv-001}
+\bookq[]{questions/05-random-variables/rv-002}
+\bookq[]{questions/05-random-variables/rv-003}
+\bookq[]{questions/05-random-variables/rv-004}
+\bookq[]{questions/05-random-variables/rv-005}
+
+
+\bookq[\section{תוחלת ושונות}]{questions/06-expectation/exp-001}
+\bookq[]{questions/06-expectation/exp-002}
+\bookq[]{questions/06-expectation/exp-003}
+\bookq[]{questions/06-expectation/exp-004}
+
+\end{document}

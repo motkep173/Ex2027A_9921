@@ -1,0 +1,85 @@
+% ==================================================================
+% id:       sets-001
+% topic:    תורת הקבוצות ומאורעות
+% subtopic: פעולות על קבוצות ומאורעות
+% solution: full
+% verified: no
+% ==================================================================
+גפן הולכת למכולת השכונתית ומתלבטת איזה מבין שלושה סוגים של חלב לקנות: סויה, שקדים או שיבולת שועל. נסמן את המאורעות:
+$A$ = "גפן קנתה חלב סויה", $B$ = "גפן קנתה חלב שקדים", $C$ = "גפן קנתה חלב שיבולת שועל".
+
+תארו כל אחד מהמאורעות הבאים בעזרת $A,B,C$ והפעולות חיתוך, איחוד, הפרש ומשלים. בנוסף, ציירו בכל סעיף את דיאגרמת ון המתאימה.
+\begin{enumerate}
+\item גפן קונה את שלושת הסוגים.
+\begin{solbox}
+\unverified
+$\ans{A\cap B\cap C}$
+
+\begin{center}
+\venn{1/1/1}{(א)}
+\end{center}
+\end{solbox}
+\item גפן קונה חלב סויה, אבל לא קונה שקדים ולא שיבולת שועל.
+\begin{solbox}
+\unverified
+$\ans{A\cap\comp B\cap\comp C}$
+
+\begin{center}
+\venn{1/0/0}{(ב)}
+\end{center}
+\end{solbox}
+\item גפן קונה חלב שקדים, ועוד בדיוק אחד מבין שני הסוגים האחרים.
+\begin{solbox}
+\unverified
+$\ans{B\cap\big((A\cap\comp C)\cup(\comp A\cap C)\big)}$
+
+\begin{center}
+\venn{1/1/0,0/1/1}{(ג)}
+\end{center}
+\end{solbox}
+\item גפן קונה לכל היותר סוג חלב אחד.
+\begin{solbox}
+\unverified
+$\ans{(\comp A\cap\comp B\cap\comp C)\cup(A\cap\comp B\cap\comp C)\cup(\comp A\cap B\cap\comp C)\cup(\comp A\cap\comp B\cap C)}$
+
+\begin{center}
+\venn{0/0/0,1/0/0,0/1/0,0/0/1}{(ד)}
+\end{center}
+\end{solbox}
+\item גפן קונה בדיוק סוג חלב אחד.
+\begin{solbox}
+\unverified
+$\ans{(A\cap\comp B\cap\comp C)\cup(\comp A\cap B\cap\comp C)\cup(\comp A\cap\comp B\cap C)}$
+
+\begin{center}
+\venn{1/0/0,0/1/0,0/0/1}{(ה)}
+\end{center}
+\end{solbox}
+\item גפן קונה בדיוק שני סוגי חלב.
+\begin{solbox}
+\unverified
+$\ans{(A\cap B\cap\comp C)\cup(A\cap\comp B\cap C)\cup(\comp A\cap B\cap C)}$
+
+\begin{center}
+\venn{1/1/0,1/0/1,0/1/1}{(ו)}
+\end{center}
+\end{solbox}
+\item גפן לא קונה חלב כלל.
+\begin{solbox}
+\unverified
+$\ans{\comp{A\cup B\cup C}}$
+
+\begin{center}
+\venn{0/0/0}{(ז)}
+\end{center}
+\end{solbox}
+\item גפן קונה לפחות שני סוגים שונים של חלב.
+\begin{solbox}
+\unverified
+$\ans{(A\cap B)\cup(A\cap C)\cup(B\cap C)}$
+
+\begin{center}
+\venn{1/1/0,1/0/1,0/1/1,1/1/1}{(ח)}
+\end{center}
+\end{solbox}
+\end{enumerate}

@@ -1,0 +1,40 @@
+% ==================================================================
+% id:       rv-004
+% topic:    משתנים מקריים
+% subtopic: משתנים מקריים מוכרים
+% solution: full
+% verified: no
+% ==================================================================
+יהיו $X\sim\Bin(4,0.3)$ ו-$Y\sim\Poi(3)$ משתנים מקריים בלתי תלויים. חשבו:
+\begin{solbox}
+\unverified
+$R_X=\set{0,1,2,3,4}$ ו-$R_Y=\set{0,1,2,\dots}$. בכל סעיף מפרקים את המאורע לאיחוד זר של מאורעות מהצורה $\set{X=k,Y=m}$, ומשתמשים באי-התלות.
+\end{solbox}
+\begin{enumerate}
+\item $\PP(X+Y=1)$;
+\begin{solbox}
+\unverified
+\[
+\begin{split}
+\PP(X+Y=1)&=\PP(X=0)\PP(Y=1)+\PP(X=1)\PP(Y=0)\\
+&=0.7^4\cdot e^{-3}\frac{3^1}{1!}+\binom41\,0.3\cdot0.7^3\cdot e^{-3}\frac{3^0}{0!}\approx\ans{0.0564}.
+\end{split}
+\]
+\end{solbox}
+\item $\PP(X+Y=5)$;
+\begin{solbox}
+\unverified
+$X$ לא יכול להיות 5, ולכן
+\[
+\PP(X+Y=5)=\sum_{k=0}^4\PP(X=k)\PP(Y=5-k)=\sum_{k=0}^4\binom4k0.3^k0.7^{4-k}\cdot e^{-3}\frac{3^{5-k}}{(5-k)!}\approx\ans{0.1708}.
+\]
+\end{solbox}
+\item $\PP(X<Y)$.
+\begin{solbox}
+\unverified
+המאורע $\set{X<Y}$ מורכב מאינסוף מקרים $\set{X=k,Y=m}$ עם $m>k$. במקום זאת נחשב את המשלים, שבו יש רק מספר סופי של מקרים:
+\[
+\PP(X<Y)=1-\PP(X\ge Y)=1-\sum_{k=0}^4\sum_{m=0}^k\PP(X=k)\PP(Y=m)\approx\ans{0.7386}.
+\]
+\end{solbox}
+\end{enumerate}
