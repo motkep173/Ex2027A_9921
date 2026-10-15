@@ -74,7 +74,7 @@
 % \bookq[כותרת פרק]{קובץ}: התרגיל לא נשבר בין עמודים. לפני הדפסתו מודדים את גובהו (כולל כותרת הפרק
 % שלפניו, אם יש), ואם אין לו מספיק מקום בעמוד הנוכחי הוא עובר לעמוד הבא.
 % תרגיל עם פתרון שארוך מעמוד שלם: נשמר יחד לפחות נוסח השאלה (בלי הפתרון) ותחילת הפתרון.
-% פרק חדש לא מתחיל בעמוד חדש; הכותרת שלו תמיד נשארת עם התרגיל הראשון בפרק.
+% פרק חדש לא מתחיל בעמוד חדש: הכותרת שלו נשארת עם תחילת התרגיל הראשון בפרק, והתרגיל הזה יכול להמשיך בעמוד הבא.
 \makeatletter
 \edef\bk@style{\bookletstyle}
 \def\bk@lines{lines}
@@ -105,13 +105,22 @@
   \bk@need=\dimexpr\ht\bk@measure+\dp\bk@measure\relax}
 \newcommand{\bookq}[2][]{%
   \par
-  \bk@measureit{#1\bk@one{#2}}%
+  \if\relax\detokenize{#1}\relax
+    \bk@keep{#2}%
+  \else
+    % תחילת פרק: הפרק ממשיך באותו עמוד אם יש מקום לכותרת ולתחילת התרגיל הראשון,
+    % גם אם התרגיל הזה ימשיך בעמוד הבא
+    \needspace{7\baselineskip}%
+    #1\bk@one{#2}%
+  \fi}
+\newcommand{\bk@keep}[1]{%
+  \bk@measureit{\bk@one{#1}}%
   \ifdim\bk@need>\dimexpr\textheight-3\baselineskip\relax
     % ארוך מעמוד: מודדים רק את נוסח השאלה, בלי הפתרונות
-    \bk@measureit{\RenewEnviron{solbox}{}#1\bk@one{#2}}%
+    \bk@measureit{\RenewEnviron{solbox}{}\bk@one{#1}}%
     \advance\bk@need by 4\baselineskip
     \ifdim\bk@need>\textheight \bk@need=\textheight \fi
   \fi
   \needspace{\bk@need}%
-  #1\bk@one{#2}}
+  \bk@one{#1}}
 \makeatother
