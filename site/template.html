@@ -241,6 +241,10 @@ footer { font-size: var(--step--1); color: var(--muted); border-top: 1px solid v
 .solution .steps { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; overflow-wrap: anywhere; }
 .chapter-head { font-size: var(--step-2); margin: 12px 0 0; padding-bottom: 6px; border-bottom: 2px solid var(--brand-bright); }
 .chapter-head:first-child { margin-top: 0; }
+/* Parts of a question inside one card: separated by a thin rule */
+.part-item { display: grid; gap: 10px; padding-top: 12px; border-top: 1px solid var(--line); min-width: 0; }
+.part-item .q-text .part { margin: 0; }
+
 /* Venn diagrams (drawn as SVG by make_site.py) and tables */
 .figs { display: flex; flex-wrap: wrap; gap: 10px 16px; justify-content: center; }
 figure.venn { margin: 0; display: inline-grid; justify-items: center; gap: 2px; font-size: var(--step--1); color: var(--muted); }
@@ -508,7 +512,12 @@ function card(q) {
   c.append(el("h2", "source", q.book ? `תרגיל ${q.book}` : "הצעה חדשה"));
   c.append(el("div", "q-text", q.text));
   if (q.notes) c.append(el("div", "note", q.notes));
+  answer(q, c);
+  return c;
+}
 
+// The hint and solution buttons of one card (or one part of a question), appended to c.
+function answer(q, c) {
   // A hint (optional) comes before the solution: its button sits first in the row.
   const row = el("div", "btn-row");
   let hintBox = null;
@@ -536,7 +545,7 @@ function card(q) {
     btn.disabled = true;
     c.append(row);
     if (hintBox) c.append(hintBox);
-    return c;
+    return;
   }
   const sid = "sol-" + q.id;
   btn.textContent = "הצג פתרון";
@@ -592,6 +601,29 @@ function card(q) {
   c.append(row);
   if (hintBox) c.append(hintBox);
   c.append(sol);
+}
+
+// A question with several parts: one card, with the opening shown once and each part below it,
+// each with its own hint and solution.
+function groupCard(qs) {
+  const q = qs[0];
+  const c = el("article", "q");
+  const meta = el("div", "meta");
+  meta.append(el("span", "chip", q.topic), el("span", "chip sub", q.sub));
+  if (q.suggested) { c.classList.add("suggested"); meta.append(el("span", "badge suggested", "הצעה חדשה, טרם אושרה")); }
+  c.append(meta);
+  c.append(el("h2", "source", q.book ? `תרגיל ${q.book.replace(/[\u05d0-\u05ea]+$/, "")}` : "הצעה חדשה"));
+  const tmp = el("div", "", q.text);
+  const intro = tmp.querySelector(".intro");
+  if (intro) c.append(el("div", "q-text", intro.innerHTML));
+  qs.forEach(p => {
+    const box = el("section", "part-item");
+    const t = el("div", "", p.text);
+    const part = t.querySelector(".part");
+    box.append(el("div", "q-text", part ? part.outerHTML : p.text));
+    answer(p, box);
+    c.append(box);
+  });
   return c;
 }
 
@@ -602,17 +634,27 @@ function renderList(items) {
   let shown = 0, last = null;
   const more = el("button", "btn more");
   more.type = "button";
+  // Consecutive parts of the same question form one group; pages end between questions.
+  const groups = [];
+  items.forEach(q => {
+    const g = groups[groups.length - 1];
+    if (g && g[0].qid === q.qid && q.id !== q.qid) g.push(q); else groups.push([q]);
+  });
+  let g0 = 0;
   function page() {
     const chunk = el("div", "list");
-    items.slice(shown, shown + PAGE).forEach(q => {
-      const key = q.topic;
+    let n = 0;
+    while (g0 < groups.length && (n === 0 || n + groups[g0].length <= PAGE)) {
+      const g = groups[g0++];
+      n += g.length;
+      const key = g[0].topic;
       if (key !== last) {
         last = key;
         chunk.append(el("h2", "chapter-head", key));
       }
-      chunk.append(card(q));
-    });
-    shown = Math.min(items.length, shown + PAGE);
+      chunk.append(g.length > 1 || g[0].id !== g[0].qid ? groupCard(g) : card(g[0]));
+    }
+    shown += n;
     list.append(chunk);
     typeset(chunk);
     more.hidden = shown >= items.length;
