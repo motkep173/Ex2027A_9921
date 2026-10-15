@@ -25,21 +25,21 @@
 \]
 \item נסמן $A_i$ = "לסניף ה-$i$ הגיעה לפחות מתמטיקאית אחת", $i=1,2,3$. אנחנו מחפשים את $\PP(A_1\cap A_2\cap A_3)$. לפי המשלים ודה־מורגן:
 \[
-\PP(A_1\cap A_2\cap A_3)=1-\PP(\comp{A_1}\cup\comp{A_2}\cup\comp{A_3}),
+\PP(A_1\cap A_2\cap A_3)=1-\PP(A_1^C\cup A_2^C\cup A_3^C),
 \]
 ולפי עקרון ההכלה וההפרדה:
 \[
 \begin{split}
-\PP(\comp{A_1}\cup\comp{A_2}\cup\comp{A_3})={}&\PP(\comp{A_1})+\PP(\comp{A_2})+\PP(\comp{A_3})\\
-&-\PP(\comp{A_1}\cap\comp{A_2})-\PP(\comp{A_1}\cap\comp{A_3})-\PP(\comp{A_2}\cap\comp{A_3})\\
-&+\PP(\comp{A_1}\cap\comp{A_2}\cap\comp{A_3}).
+\PP(A_1^C\cup A_2^C\cup A_3^C)={}&\PP(A_1^C)+\PP(A_2^C)+\PP(A_3^C)\\
+&-\PP(A_1^C\cap A_2^C)-\PP(A_1^C\cap A_3^C)-\PP(A_2^C\cap A_3^C)\\
+&+\PP(A_1^C\cap A_2^C\cap A_3^C).
 \end{split}
 \]
 
 \begin{itemize}
-\item כל $\comp{A_i}$ פירושו שלסניף ה-$i$ לא הגיעה אף אחת. כמו בסעיף (ב), $\PP(\comp{A_i})=(\frac23)^{10}$.
-\item כל $\comp{A_i}\cap\comp{A_j}$ פירושו שכולן הגיעו לסניף הנותר, ולכן $\PP(\comp{A_i}\cap\comp{A_j})=\frac1{3^{10}}$.
-\item $\comp{A_1}\cap\comp{A_2}\cap\comp{A_3}=\emptyset$, ולכן הסתברותו $0$.
+\item כל $A_i^C$ פירושו שלסניף ה-$i$ לא הגיעה אף אחת. כמו בסעיף (ב), $\PP(A_i^C)=(\frac23)^{10}$.
+\item כל $A_i^C\cap A_j^C$ פירושו שכולן הגיעו לסניף הנותר, ולכן $\PP(A_i^C\cap A_j^C)=\frac1{3^{10}}$.
+\item $A_1^C\cap A_2^C\cap A_3^C=\emptyset$, ולכן הסתברותו $0$.
 \end{itemize}
 לכן
 \[
