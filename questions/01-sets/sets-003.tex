@@ -1,0 +1,34 @@
+% ==================================================================
+% id:       sets-003
+% topic:    תורת הקבוצות ומאורעות
+% subtopic: פעולות על קבוצות ומאורעות
+% solution: full
+% ==================================================================
+יהיו $A,B,C$ קבוצות. הוכיחו בעזרת הכלה דו-כיוונית:
+\begin{enumerate}
+\item $(A\cup B)^C=A^C\cap B^C$.
+\begin{solbox}
+נוכיח שתי הכלות.
+
+\textbf{$(A\cup B)^C\subseteq A^C\cap B^C$:} יהי $x\in(A\cup B)^C$. אז $x\notin A\cup B$, כלומר $x$ אינו באף אחת משתי הקבוצות: $x\notin A$ וגם $x\notin B$. לכן $x\in A^C$ וגם $x\in B^C$, כלומר $x\in A^C\cap B^C$.
+
+\textbf{$A^C\cap B^C\subseteq(A\cup B)^C$:} יהי $x\in A^C\cap B^C$. אז $x\in A^C$ וגם $x\in B^C$, כלומר $x\notin A$ וגם $x\notin B$. לכן $x$ אינו באף אחת משתי הקבוצות, כלומר $x\notin A\cup B$, ולכן $x\in(A\cup B)^C$.
+
+משתי ההכלות נובע ש-$\ans{(A\cup B)^C=A^C\cap B^C}$.
+\end{solbox}
+\item $A\cap(B\cup C)=(A\cap B)\cup(A\cap C)$. ציירו דיאגרמת ון לכל אחד מהאגפים.
+\begin{solbox}
+נוכיח שתי הכלות.
+
+\textbf{$A\cap(B\cup C)\subseteq(A\cap B)\cup(A\cap C)$:} יהי $x\in A\cap(B\cup C)$. אז $x\in A$ וגם $x\in B\cup C$, כלומר $x\in B$ או $x\in C$. אם $x\in B$, אז $x\in A\cap B$; אם $x\in C$, אז $x\in A\cap C$. בשני המקרים $x\in(A\cap B)\cup(A\cap C)$.
+
+\textbf{$(A\cap B)\cup(A\cap C)\subseteq A\cap(B\cup C)$:} יהי $x\in(A\cap B)\cup(A\cap C)$. אם $x\in A\cap B$, אז $x\in A$ ו-$x\in B\subseteq B\cup C$; אם $x\in A\cap C$, אז $x\in A$ ו-$x\in C\subseteq B\cup C$. בשני המקרים $x\in A$ וגם $x\in B\cup C$, כלומר $x\in A\cap(B\cup C)$.
+
+לכן $\ans{A\cap(B\cup C)=(A\cap B)\cup(A\cap C)}$. בשני האגפים האזור הצבוע הוא אותו אזור: החלק של $A$ שנמצא ב-$B$ או ב-$C$.
+
+\begin{center}
+\venn{1/1/0,1/0/1,1/1/1}{$A\cap(B\cup C)$}\qquad
+\venn{1/1/0,1/0/1,1/1/1}{$(A\cap B)\cup(A\cap C)$}
+\end{center}
+\end{solbox}
+\end{enumerate}
