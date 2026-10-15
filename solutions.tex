@@ -18,34 +18,39 @@
 \booklettitlepage
 {\small\tableofcontents}
 
-\expandafter\def\csname qref@sets-001\endcsname{1}
-\expandafter\def\csname qref@sets-002\endcsname{2}
-\expandafter\def\csname qref@sets-003\endcsname{3}
-\expandafter\def\csname qref@sets-004\endcsname{4}
-\expandafter\def\csname qref@comb-001\endcsname{5}
-\expandafter\def\csname qref@comb-002\endcsname{6}
-\expandafter\def\csname qref@comb-008\endcsname{7}
-\expandafter\def\csname qref@comb-009\endcsname{8}
-\expandafter\def\csname qref@comb-010\endcsname{9}
-\expandafter\def\csname qref@comb-011\endcsname{10}
-\expandafter\def\csname qref@comb-003\endcsname{11}
-\expandafter\def\csname qref@comb-012\endcsname{12}
-\expandafter\def\csname qref@comb-013\endcsname{13}
-\expandafter\def\csname qref@comb-005\endcsname{14}
-\expandafter\def\csname qref@comb-006\endcsname{15}
-\expandafter\def\csname qref@prob-001\endcsname{16}
-\expandafter\def\csname qref@prob-002\endcsname{17}
-\expandafter\def\csname qref@comb-004\endcsname{18}
-\expandafter\def\csname qref@cond-001\endcsname{19}
-\expandafter\def\csname qref@rv-001\endcsname{20}
-\expandafter\def\csname qref@rv-002\endcsname{21}
-\expandafter\def\csname qref@rv-003\endcsname{22}
-\expandafter\def\csname qref@rv-004\endcsname{23}
-\expandafter\def\csname qref@rv-005\endcsname{24}
-\expandafter\def\csname qref@exp-001\endcsname{25}
-\expandafter\def\csname qref@exp-002\endcsname{26}
-\expandafter\def\csname qref@exp-003\endcsname{27}
-\expandafter\def\csname qref@exp-004\endcsname{28}
+\expandafter\def\csname qref@sets-005\endcsname{1}
+\expandafter\def\csname qref@sets-001\endcsname{2}
+\expandafter\def\csname qref@sets-002\endcsname{3}
+\expandafter\def\csname qref@sets-003\endcsname{4}
+\expandafter\def\csname qref@sets-007\endcsname{5}
+\expandafter\def\csname qref@sets-011\endcsname{6}
+\expandafter\def\csname qref@sets-010\endcsname{7}
+\expandafter\def\csname qref@sets-004\endcsname{8}
+\expandafter\def\csname qref@sets-009\endcsname{9}
+\expandafter\def\csname qref@comb-001\endcsname{10}
+\expandafter\def\csname qref@comb-002\endcsname{11}
+\expandafter\def\csname qref@comb-008\endcsname{12}
+\expandafter\def\csname qref@comb-009\endcsname{13}
+\expandafter\def\csname qref@comb-010\endcsname{14}
+\expandafter\def\csname qref@comb-011\endcsname{15}
+\expandafter\def\csname qref@comb-003\endcsname{16}
+\expandafter\def\csname qref@comb-012\endcsname{17}
+\expandafter\def\csname qref@comb-013\endcsname{18}
+\expandafter\def\csname qref@comb-005\endcsname{19}
+\expandafter\def\csname qref@comb-006\endcsname{20}
+\expandafter\def\csname qref@prob-001\endcsname{21}
+\expandafter\def\csname qref@prob-002\endcsname{22}
+\expandafter\def\csname qref@comb-004\endcsname{23}
+\expandafter\def\csname qref@cond-001\endcsname{24}
+\expandafter\def\csname qref@rv-001\endcsname{25}
+\expandafter\def\csname qref@rv-002\endcsname{26}
+\expandafter\def\csname qref@rv-003\endcsname{27}
+\expandafter\def\csname qref@rv-004\endcsname{28}
+\expandafter\def\csname qref@rv-005\endcsname{29}
+\expandafter\def\csname qref@exp-001\endcsname{30}
+\expandafter\def\csname qref@exp-002\endcsname{31}
+\expandafter\def\csname qref@exp-003\endcsname{32}
+\expandafter\def\csname qref@exp-004\endcsname{33}
 \renewcommand{\qref}[1]{\ifcsname qref@#1\endcsname\csname qref@#1\endcsname\else\textenglish{#1}\fi}
 
 \newpage
@@ -54,35 +59,41 @@
 כאן מופיעים רק הרמזים, בלי הפתרונות. נסו קודם לפתור בעזרת הרמז, ורק אחר כך עברו לפתרון.
 
 
+\subsection*{תורת הקבוצות ומאורעות}
+\noindent \bknum{5}\ (א)\enskip לכל אזור צבוע, בדקו אם הוא בתוך כל אחת מהקבוצות $A,B,C$ או מחוץ לה.\par\smallskip
+\noindent \bknum{6}\ (א)\enskip הכלה דו-כיוונית: הראו ש-$A\cap B\subseteq A$ וגם ש-$A\subseteq A\cap B$. בכיוון השני השתמשו בהנחה $A\subseteq B$.\par\smallskip
+\noindent \bknum{7}\enskip כתבו את $A\cup B$ כאיחוד של שתי קבוצות זרות, $A\setminus B$ ו-$B$. לגודל של $A\setminus B$ השתמשו בעקרון החיסור.\par\smallskip
+\noindent \bknum{9}\ (ב)\enskip תתי-הקבוצות של קבוצה עם איבר אחד הן הקבוצה הריקה והקבוצה עצמה.\par\smallskip
+
 \subsection*{קומבינטוריקה}
-\noindent \bknum{5}\ (ג)\enskip חשבו על כל נושא כעל "בלוק" אחד: קודם מסדרים את הבלוקים, ואחר כך את הספרים בתוך כל בלוק.\par\smallskip
-\noindent \bknum{5}\ (ה)\enskip בכל שבוע בוחרים זוג ספרים, בלי חשיבות לסדר בתוך הזוג. הרשימה היא סדרה של 5 זוגות כאלה, אחד לכל שבוע, ולכן אפשר להשתמש בעקרון הכפל.\par\smallskip
-\noindent \bknum{10}\enskip סמנו $|\Omega|=n$, ובחרו ערכים מתאימים ל-$a$ ול-$b$ בבינום של ניוטון.\par\smallskip
-\noindent \bknum{11}\enskip גפן צריכה לארוז 13 זוגות מכנסיים לחופשה. בארון יש לה 30 זוגות, מתוכם 10 ארוכים ו-20 קצרים. בכמה דרכים היא יכולה לעשות זאת?\par\smallskip
-\noindent \bknum{12}\enskip כמה זוגות מכנסיים יש עכשיו לגפן בארון, וכמה היא צריכה לארוז?\par\smallskip
-\noindent \bknum{13}\ (א)\enskip מתוך $n$ תלמידים, שאחד מהם הוא דני, בוחרים $k$. מפרידים לשני מקרים: דני נבחר, או דני לא נבחר.\par\smallskip
-\noindent \bknum{14}\ (א)\enskip כתבו את 6 כשורה של שש אחדות: $1\ \_\ 1\ \_\ 1\ \_\ 1\ \_\ 1\ \_\ 1$. בין האחדות יש 5 רווחים, ובכל רווח מחליטים אם לשים בו "$+$" או להשאיר אותו ריק.\par\smallskip
+\noindent \bknum{10}\ (ג)\enskip חשבו על כל נושא כעל "בלוק" אחד: קודם מסדרים את הבלוקים, ואחר כך את הספרים בתוך כל בלוק.\par\smallskip
+\noindent \bknum{10}\ (ה)\enskip בכל שבוע בוחרים זוג ספרים, בלי חשיבות לסדר בתוך הזוג. הרשימה היא סדרה של 5 זוגות כאלה, אחד לכל שבוע, ולכן אפשר להשתמש בעקרון הכפל.\par\smallskip
+\noindent \bknum{15}\enskip סמנו $|\Omega|=n$, ובחרו ערכים מתאימים ל-$a$ ול-$b$ בבינום של ניוטון.\par\smallskip
+\noindent \bknum{16}\enskip גפן צריכה לארוז 13 זוגות מכנסיים לחופשה. בארון יש לה 30 זוגות, מתוכם 10 ארוכים ו-20 קצרים. בכמה דרכים היא יכולה לעשות זאת?\par\smallskip
+\noindent \bknum{17}\enskip כמה זוגות מכנסיים יש עכשיו לגפן בארון, וכמה היא צריכה לארוז?\par\smallskip
+\noindent \bknum{18}\ (א)\enskip מתוך $n$ תלמידים, שאחד מהם הוא דני, בוחרים $k$. מפרידים לשני מקרים: דני נבחר, או דני לא נבחר.\par\smallskip
+\noindent \bknum{19}\ (א)\enskip כתבו את 6 כשורה של שש אחדות: $1\ \_\ 1\ \_\ 1\ \_\ 1\ \_\ 1\ \_\ 1$. בין האחדות יש 5 רווחים, ובכל רווח מחליטים אם לשים בו "$+$" או להשאיר אותו ריק.\par\smallskip
 
 \subsection*{מבוא להסתברות}
-\noindent \bknum{16}\ (ג)\enskip סמנו $A_i$ = "לסניף ה-$i$ הגיעה לפחות מדענית מחשב אחת", ועברו למשלים: $\PP(A_1\cap A_2\cap A_3)=1-\PP(A_1^C\cup A_2^C\cup A_3^C)$.\par\smallskip
-\noindent \bknum{17}\ (ב)\enskip האם המאורעות $\set{1,2},\set{2,3},\set{3,4},\dots$ זרים? חפשו מאורעות מהצורה $\set{k,k+1}$ שכן זרים בזוגות, ושהאיחוד שלהם הוא $\Omega$.\par\smallskip
+\noindent \bknum{21}\ (ג)\enskip סמנו $A_i$ = "לסניף ה-$i$ הגיעה לפחות מדענית מחשב אחת", ועברו למשלים: $\PP(A_1\cap A_2\cap A_3)=1-\PP(A_1^C\cup A_2^C\cup A_3^C)$.\par\smallskip
+\noindent \bknum{22}\ (ב)\enskip האם המאורעות $\set{1,2},\set{2,3},\set{3,4},\dots$ זרים? חפשו מאורעות מהצורה $\set{k,k+1}$ שכן זרים בזוגות, ושהאיחוד שלהם הוא $\Omega$.\par\smallskip
 
 \subsection*{הסתברות מותנית ואי-תלות}
-\noindent \bknum{19}\ (א)\enskip השתמשו בנוסחת ההסתברות השלמה, עם חלוקה לפי הקופסה שהפרופסור בחר.\par\smallskip
-\noindent \bknum{19}\ (ב)\enskip השתמשו בנוסחת בייס ובתשובה לסעיף הקודם.\par\smallskip
+\noindent \bknum{24}\ (א)\enskip השתמשו בנוסחת ההסתברות השלמה, עם חלוקה לפי הקופסה שהפרופסור בחר.\par\smallskip
+\noindent \bknum{24}\ (ב)\enskip השתמשו בנוסחת בייס ובתשובה לסעיף הקודם.\par\smallskip
 
 \subsection*{משתנים מקריים}
-\noindent \bknum{20}\enskip סמנו $p_k=\PP(X=k)$ וכתבו כל אחד מהנתונים כמשוואה, למשל $F_X(2)=p_0+p_1+p_2$. אל תשכחו ש-$p_0+p_1+p_2+p_3+p_4=1$.\par\smallskip
-\noindent \bknum{21}\enskip $X=k$ כשהסופגניות שנדב בוחר בפעמים $1,\dots,k-1$ אינן שוקולד, והסופגנייה שהוא בוחר בפעם ה-$k$ היא שוקולד. כפלו את ההסתברויות המותנות של כל שלב.\par\smallskip
-\noindent \bknum{22}\ (א)\enskip מה צריך לקרות בשלוש השנים הראשונות, ומה בשנה הרביעית?\par\smallskip
-\noindent \bknum{22}\ (ד)\enskip בכל שנה יש ארבע אפשרויות לשני הקורסים. בסעיף השני חלקו לפי השנה $k$ שבה שניהם יוצאים לשבתון, וסכמו על $k$.\par\smallskip
-\noindent \bknum{23}\ (א)\enskip מתי $X+Y=1$? שני המשתנים מקבלים רק ערכים שלמים ואי-שליליים.\par\smallskip
-\noindent \bknum{23}\ (ג)\enskip חלקו לפי הערך של $X$, שיכול להיות רק $0,1,2,3$ או $4$.\par\smallskip
+\noindent \bknum{25}\enskip סמנו $p_k=\PP(X=k)$ וכתבו כל אחד מהנתונים כמשוואה, למשל $F_X(2)=p_0+p_1+p_2$. אל תשכחו ש-$p_0+p_1+p_2+p_3+p_4=1$.\par\smallskip
+\noindent \bknum{26}\enskip $X=k$ כשהסופגניות שנדב בוחר בפעמים $1,\dots,k-1$ אינן שוקולד, והסופגנייה שהוא בוחר בפעם ה-$k$ היא שוקולד. כפלו את ההסתברויות המותנות של כל שלב.\par\smallskip
+\noindent \bknum{27}\ (א)\enskip מה צריך לקרות בשלוש השנים הראשונות, ומה בשנה הרביעית?\par\smallskip
+\noindent \bknum{27}\ (ד)\enskip בכל שנה יש ארבע אפשרויות לשני הקורסים. בסעיף השני חלקו לפי השנה $k$ שבה שניהם יוצאים לשבתון, וסכמו על $k$.\par\smallskip
+\noindent \bknum{28}\ (א)\enskip מתי $X+Y=1$? שני המשתנים מקבלים רק ערכים שלמים ואי-שליליים.\par\smallskip
+\noindent \bknum{28}\ (ג)\enskip חלקו לפי הערך של $X$, שיכול להיות רק $0,1,2,3$ או $4$.\par\smallskip
 
 \subsection*{תוחלת ושונות}
-\noindent \bknum{25}\ (ב)\enskip רשמו את כל הערכים האפשריים של $Y$ ואת ההסתברות של כל אחד מהם. לשונות היעזרו ב-$\Var[Y]=\E[Y^2]-(\E[Y])^2$.\par\smallskip
-\noindent \bknum{26}\ (ב)\enskip סמנו $p_k=\PP(X=k)$ וכתבו שלוש משוואות: סכום ההסתברויות, התוחלת, ו-$\E[X^2]=\Var[X]+(\E[X])^2$.\par\smallskip
-\noindent \bknum{27}\ (א)\enskip לכל קורס $i$ הגדירו משתנה $I_i$, ששווה ל-1 אם אף סטודנט מהמחלקה לא בחר בקורס, ול-0 אחרת. מספר הקורסים הריקים הוא $I_1+\dots+I_{100}$.\par\smallskip
+\noindent \bknum{30}\ (ב)\enskip רשמו את כל הערכים האפשריים של $Y$ ואת ההסתברות של כל אחד מהם. לשונות היעזרו ב-$\Var[Y]=\E[Y^2]-(\E[Y])^2$.\par\smallskip
+\noindent \bknum{31}\ (ב)\enskip סמנו $p_k=\PP(X=k)$ וכתבו שלוש משוואות: סכום ההסתברויות, התוחלת, ו-$\E[X^2]=\Var[X]+(\E[X])^2$.\par\smallskip
+\noindent \bknum{32}\ (א)\enskip לכל קורס $i$ הגדירו משתנה $I_i$, ששווה ל-1 אם אף סטודנט מהמחלקה לא בחר בקורס, ול-0 אחרת. מספר הקורסים הריקים הוא $I_1+\dots+I_{100}$.\par\smallskip
 
 \newpage
 \section*{פתרונות}
@@ -91,10 +102,15 @@
 \setcounter{section}{0}
 
 
-\bookq[\section{תורת הקבוצות ומאורעות}]{questions/01-sets/sets-001}
+\bookq[\section{תורת הקבוצות ומאורעות}]{questions/01-sets/sets-005}
+\bookq[]{questions/01-sets/sets-001}
 \bookq[]{questions/01-sets/sets-002}
 \bookq[]{questions/01-sets/sets-003}
+\bookq[]{questions/01-sets/sets-007}
+\bookq[]{questions/01-sets/sets-011}
+\bookq[]{questions/01-sets/sets-010}
 \bookq[]{questions/01-sets/sets-004}
+\bookq[]{questions/01-sets/sets-009}
 
 
 \bookq[\section{קומבינטוריקה}]{questions/02-combinatorics/comb-001}

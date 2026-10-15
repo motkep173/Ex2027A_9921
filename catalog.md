@@ -1,18 +1,23 @@
 # קטלוג מאגר השאלות
 
-נוצר אוטומטית ע"י `make_bank.py`. סה"כ **28** שאלות.
+נוצר אוטומטית ע"י `make_bank.py`. סה"כ **33** שאלות.
 
-**פתרונות שטרם נבדקו (12):** [sets-002](questions/01-sets/sets-002.tex), [prob-002](questions/03-probability/prob-002.tex), [cond-001](questions/04-conditional/cond-001.tex), [rv-001](questions/05-random-variables/rv-001.tex), [rv-002](questions/05-random-variables/rv-002.tex), [rv-003](questions/05-random-variables/rv-003.tex), [rv-004](questions/05-random-variables/rv-004.tex), [rv-005](questions/05-random-variables/rv-005.tex), [exp-001](questions/06-expectation/exp-001.tex), [exp-002](questions/06-expectation/exp-002.tex), [exp-003](questions/06-expectation/exp-003.tex), [exp-004](questions/06-expectation/exp-004.tex)
+**פתרונות שטרם נבדקו (11):** [prob-002](questions/03-probability/prob-002.tex), [cond-001](questions/04-conditional/cond-001.tex), [rv-001](questions/05-random-variables/rv-001.tex), [rv-002](questions/05-random-variables/rv-002.tex), [rv-003](questions/05-random-variables/rv-003.tex), [rv-004](questions/05-random-variables/rv-004.tex), [rv-005](questions/05-random-variables/rv-005.tex), [exp-001](questions/06-expectation/exp-001.tex), [exp-002](questions/06-expectation/exp-002.tex), [exp-003](questions/06-expectation/exp-003.tex), [exp-004](questions/06-expectation/exp-004.tex)
 
 
-## תורת הקבוצות ומאורעות (4)
+## תורת הקבוצות ומאורעות (9)
 
 | מזהה | תת־נושא | פתרון | התחלת השאלה |
 |---|---|---|---|
+| [sets-005](questions/01-sets/sets-005.tex) | תיאור קבוצות, שייכות והכלה | מלא | בסעיפים א--ג כתבו את הקבוצה ברשימת איברים. $A=\setof{x\in\N}{x\le5}$. … |
 | [sets-001](questions/01-sets/sets-001.tex) | פעולות על קבוצות ומאורעות | מלא | גפן הולכת למכולת השכונתית ומתלבטת איזה מבין שלושה סוגים של חלב לקנות: … |
-| [sets-002](questions/01-sets/sets-002.tex) | פעולות על קבוצות ומאורעות | מלא ⚠️ טרם נבדק | הוכיחו שלכל שתי קבוצות $A\symdiff B=(A\cup B)\setminus(A\cap B)$, וציי… |
+| [sets-002](questions/01-sets/sets-002.tex) | פעולות על קבוצות ומאורעות | מלא | הוכיחו שלכל שתי קבוצות $A\symdiff B=(A\cup B)\setminus(A\cap B)$, וציי… |
 | [sets-003](questions/01-sets/sets-003.tex) | פעולות על קבוצות ומאורעות | מלא | יהיו $A,B,C$ קבוצות. הוכיחו בעזרת הכלה דו-כיוונית: $(A\cup B)^C=A^C\ca… |
+| [sets-007](questions/01-sets/sets-007.tex) | פעולות על קבוצות ומאורעות | מלא | בכל אחת מדיאגרמות הוון הבאות, כתבו ביטוי שמתאר את האזור הצבוע בעזרת $A… |
+| [sets-011](questions/01-sets/sets-011.tex) | פעולות על קבוצות ומאורעות | מלא | יהיו $A,B,C$ קבוצות. הוכיחו: אם $A\subseteq B$, אז $A\cap B=A$. אם $A\… |
+| [sets-010](questions/01-sets/sets-010.tex) | גודל של קבוצה | מלא | הוכיחו שלכל שתי קבוצות סופיות $A,B$ מתקיים $\|A\cup B\|=\|A\|+\|B\|-\|A\cap B… |
 | [sets-004](questions/01-sets/sets-004.tex) | מכפלה קרטזית וקבוצת החזקה | מלא | יהיו $A=\set{1,2,3}$ ו-$B=\set{a,b}$. כתבו את $A\times B$ ואת $B\times… |
+| [sets-009](questions/01-sets/sets-009.tex) | מכפלה קרטזית וקבוצת החזקה | מלא | תהי $A=\set{1,2,3}$. כתבו את $\Pow(A)$, ובדקו ש-$\|\Pow(A)\|=2^{\|A\|}$. מ… |
 
 ## קומבינטוריקה (11)
 
