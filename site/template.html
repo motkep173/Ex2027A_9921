@@ -1,3 +1,4 @@
+<meta charset="utf-8">
 <title>חוברת התרגילים בהסתברות</title>
 <meta name="description" content="חוברת התרגילים בהסתברות לסטטיסטיקה (214.1.9921), עם פתרונות, אוניברסיטת בן־גוריון בנגב, היחידה להוראת קורסי יסוד">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -187,6 +188,8 @@ select:disabled { opacity: 0.55; }
 .solved-btn:hover { border-color: var(--brand); color: var(--brand); }
 .solved-btn[aria-pressed="true"] { background: var(--brand-soft); border-color: var(--brand-bright); color: var(--brand); }
 .q.is-solved { border-inline-start: 4px solid var(--brand-bright); }
+.meta .solved-btn { padding: 1px 12px; }
+.nav-sub .done { color: var(--brand); font-weight: 700; margin-inline-start: 4px; }
 .hint-btn { border-style: dashed; }
 .hint { background: var(--accent-soft); border-radius: 8px; padding: 10px 14px; }
 .hint b { color: var(--accent); margin-inline-end: 4px; }
@@ -308,6 +311,7 @@ mjx-assistive-mml { max-width: 100%; overflow: hidden; }
         <li>בחרו נושא או תת־נושא בסרגל כדי לתרגל את מה שלמדתם השבוע. התרגילים מסודרים לפי סדר החומר, כמו בחוברת.</li>
         <li data-nohints>נסו לפתור לבד, ורק אז לחצו על <span class="key">הצג פתרון</span>. הפתרון נפתח שלב אחר שלב, כדי שתוכלו לנסות להמשיך לבד אחרי כל שלב.</li>
         <li data-hints>נסו לפתור לבד. נתקעתם? לחצו על <span class="key">קבלת רמז</span>, ורק אז על <span class="key">הצג פתרון</span>. הפתרון נפתח שלב אחר שלב, כדי שתוכלו לנסות להמשיך לבד אחרי כל שלב.</li>
+        <li>הגשתם תרגיל? לחצו על <span class="key">סימון כהוגש</span> שבראש התרגיל. הסימון נשמר רק בדפדפן הזה, ובסרגל מופיע ✓ ליד כל תת־נושא שהגשתם את כל התרגילים שבו.</li>
         <li>אפשר להוריד את חוברת התרגילים ואת חוברת ה<span data-hints>רמזים וה</span>פתרונות כקובצי PDF. המספור בהן זהה למספור כאן.</li>
       </ul>
     </details>
@@ -448,14 +452,47 @@ QUESTIONS.forEach(q => {
 });
 const matchesSearch = (q, words) => words.every(w => q.haystack.includes(w));
 
+// Exercises the student marked as submitted (by exercise, not by part); kept in this browser only.
+// Storage may be unavailable (private mode): then the marks last until the page is closed.
+const SUBMITTED_KEY = "exercises-9921-submitted";
+const submitted = new Set((() => { try { return JSON.parse(localStorage.getItem(SUBMITTED_KEY)) || []; } catch { return []; } })());
+function setSubmitted(qid, on) {
+  on ? submitted.add(qid) : submitted.delete(qid);
+  try { localStorage.setItem(SUBMITTED_KEY, JSON.stringify([...submitted])); } catch {}
+  showStats();
+  renderNav();
+}
+// The "submitted" toggle in the head line of an exercise card; only for exercises of the booklet.
+function submittedBtn(q, c, meta) {
+  if (!q.book || q.suggested) return;
+  const b = el("button", "solved-btn");
+  b.type = "button";
+  const paint = () => {
+    const on = submitted.has(q.qid);
+    b.setAttribute("aria-pressed", String(on));
+    b.textContent = on ? "✓ הגשתי" : "סימון כהוגש";
+    b.title = on ? "לחצו כדי לבטל את הסימון" : "הסימון נשמר רק בדפדפן הזה";
+    c.classList.toggle("is-solved", on);
+  };
+  b.addEventListener("click", () => { setSubmitted(q.qid, !submitted.has(q.qid)); paint(); });
+  paint();
+  meta.append(b);
+}
+
 // Header stats
 const nOfficial = QUESTIONS.filter(q => q.solution && q.solution.official).length;
 const nSolved = QUESTIONS.filter(q => q.solution).length;
 const nHints = QUESTIONS.filter(q => q.hint).length;
-document.getElementById("stats").innerHTML =
-  `<span><strong>${new Set(QUESTIONS.map(q => q.qid)).size}</strong> תרגילים</span>` +
-  `<span><strong>${QUESTIONS.length}</strong> סעיפים</span>` +
-  (nHints ? `<span><strong>${nHints}</strong> רמזים</span>` : "");
+const BOOK_QIDS = new Set(QUESTIONS.filter(q => q.book && !q.suggested).map(q => q.qid));
+function showStats() {
+  const nSub = [...BOOK_QIDS].filter(id => submitted.has(id)).length;
+  document.getElementById("stats").innerHTML =
+    `<span><strong>${new Set(QUESTIONS.map(q => q.qid)).size}</strong> תרגילים</span>` +
+    `<span><strong>${QUESTIONS.length}</strong> סעיפים</span>` +
+    (nHints ? `<span><strong>${nHints}</strong> רמזים</span>` : "") +
+    (nSub ? `<span>הגשתם <strong>${nSub}</strong></span>` : "");
+}
+showStats();
 // Texts about hints show only once some exercise has one
 document.querySelectorAll("[data-hints]").forEach(e => { e.hidden = !nHints; });
 document.querySelectorAll("[data-nohints]").forEach(e => { e.hidden = !!nHints; });
@@ -486,9 +523,11 @@ function renderNav() {
     s.addEventListener("click", () => { if (!d.open) { topicSel.value = t.name; fillSubs(); render(); scrollToList(); } });
     const subs = el("div", "nav-subs");
     t.subs.forEach(sub => {
-      const n = inTopic.filter(q => q.sub === sub).length;
+      const inSub = inTopic.filter(q => q.sub === sub), n = inSub.length;
       if (!n) return;
-      const b = el("button", "nav-sub", `<span>${sub}</span><b>${n}</b>`);
+      const ids = [...new Set(inSub.map(q => q.qid))].filter(id => BOOK_QIDS.has(id));
+      const allDone = ids.length && ids.every(id => submitted.has(id));
+      const b = el("button", "nav-sub", `<span>${sub}${allDone ? '<span class="done" title="הגשתם את כל התרגילים">✓</span>' : ""}</span><b>${n}</b>`);
       b.type = "button";
       b.setAttribute("aria-current", String(topicSel.value === t.name && subSel.value === sub));
       b.addEventListener("click", () => { topicSel.value = t.name; fillSubs(); subSel.value = sub; render(); scrollToList(); });
@@ -507,6 +546,7 @@ function card(q) {
   const meta = el("div", "meta");
   meta.append(el("span", "chip", q.topic), el("span", "chip sub", q.sub));
   if (q.suggested) { c.classList.add("suggested"); meta.append(el("span", "badge suggested", "הצעה חדשה, טרם אושרה")); }
+  submittedBtn(q, c, meta);
   c.append(meta);
   // The exercise number, the same as in both PDF booklets
   c.append(el("h2", "source", q.book ? `תרגיל ${q.book}` : "הצעה חדשה"));
@@ -611,6 +651,7 @@ function groupCard(qs) {
   const meta = el("div", "meta");
   meta.append(el("span", "chip", q.topic), el("span", "chip sub", q.sub));
   if (q.suggested) { c.classList.add("suggested"); meta.append(el("span", "badge suggested", "הצעה חדשה, טרם אושרה")); }
+  submittedBtn(q, c, meta);
   c.append(meta);
   c.append(el("h2", "source", q.book ? `תרגיל ${q.book.replace(/[\u05d0-\u05ea]+$/, "")}` : "הצעה חדשה"));
   const tmp = el("div", "", q.text);
