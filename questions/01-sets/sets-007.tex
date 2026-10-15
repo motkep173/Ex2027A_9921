@@ -1,0 +1,30 @@
+% ==================================================================
+% id:       sets-007
+% topic:    תורת הקבוצות ומאורעות
+% subtopic: פעולות על קבוצות ומאורעות
+% solution: full
+% ==================================================================
+בכל אחת מדיאגרמות הוון הבאות, כתבו ביטוי שמתאר את האזור הצבוע בעזרת $A,B,C$ והפעולות חיתוך, איחוד, הפרש ומשלים.
+\begin{enumerate}
+\item \venn{1/0/0}{}
+\hint{לכל אזור צבוע, בדקו אם הוא בתוך כל אחת מהקבוצות $A,B,C$ או מחוץ לה.}
+\begin{solbox}
+$\ans{A\cap B^C\cap C^C}$, או $A\setminus(B\cup C)$: מה שב-$A$ ולא ב-$B$ ולא ב-$C$.
+\end{solbox}
+\item \venn{1/1/0,1/1/1}{}
+\begin{solbox}
+$\ans{A\cap B}$: כל מה שבשתי הקבוצות $A$ ו-$B$, בלי קשר ל-$C$.
+\end{solbox}
+\item \venn{1/0/0,0/1/0,1/1/0}{}
+\begin{solbox}
+$\ans{(A\cup B)\setminus C}$, או $(A\cup B)\cap C^C$: מה שב-$A$ או ב-$B$, אבל לא ב-$C$.
+\end{solbox}
+\item \venn{0/0/0,0/0/1}{}
+\begin{solbox}
+$\ans{(A\cup B)^C}$, או $A^C\cap B^C$: מה שמחוץ ל-$A$ ומחוץ ל-$B$ (בתוך $C$ או מחוץ לה).
+\end{solbox}
+\item \venn{1/1/1,0/0/0}{}
+\begin{solbox}
+$\ans{(A\cap B\cap C)\cup(A\cup B\cup C)^C}$: מה שבשלוש הקבוצות, או מחוץ לשלושתן.
+\end{solbox}
+\end{enumerate}

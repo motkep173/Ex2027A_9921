@@ -1,0 +1,34 @@
+% ==================================================================
+% id:       sets-011
+% topic:    תורת הקבוצות ומאורעות
+% subtopic: פעולות על קבוצות ומאורעות
+% solution: full
+% ==================================================================
+יהיו $A,B,C$ קבוצות. הוכיחו:
+\begin{enumerate}
+\item אם $A\subseteq B$, אז $A\cap B=A$.
+\hint{הכלה דו-כיוונית: הראו ש-$A\cap B\subseteq A$ וגם ש-$A\subseteq A\cap B$. בכיוון השני השתמשו בהנחה $A\subseteq B$.}
+\begin{solbox}
+\textbf{$A\cap B\subseteq A$:} יהי $x\in A\cap B$. אז בפרט $x\in A$.
+
+\textbf{$A\subseteq A\cap B$:} יהי $x\in A$. מכיוון ש-$A\subseteq B$, גם $x\in B$. לכן $x\in A\cap B$.
+
+משתי ההכלות, $\ans{A\cap B=A}$.
+\end{solbox}
+\item אם $A\subseteq B$, אז $A\cup B=B$.
+\begin{solbox}
+\textbf{$A\cup B\subseteq B$:} יהי $x\in A\cup B$. אם $x\in A$, אז $x\in B$ כי $A\subseteq B$. אם $x\in B$, סיימנו. בשני המקרים $x\in B$.
+
+\textbf{$B\subseteq A\cup B$:} יהי $x\in B$. אז $x\in A\cup B$, לפי הגדרת האיחוד.
+
+לכן $\ans{A\cup B=B}$.
+\end{solbox}
+\item $A\setminus(B\cup C)=(A\setminus B)\cap(A\setminus C)$.
+\begin{solbox}
+\textbf{$\subseteq$:} יהי $x\in A\setminus(B\cup C)$. אז $x\in A$ ו-$x\notin B\cup C$, כלומר $x\notin B$ וגם $x\notin C$. לכן $x\in A\setminus B$ וגם $x\in A\setminus C$, כלומר $x\in(A\setminus B)\cap(A\setminus C)$.
+
+\textbf{$\supseteq$:} יהי $x\in(A\setminus B)\cap(A\setminus C)$. אז $x\in A\setminus B$, כלומר $x\in A$ ו-$x\notin B$, וגם $x\in A\setminus C$, כלומר $x\notin C$. לכן $x$ אינו באף אחת מהקבוצות $B,C$, כלומר $x\notin B\cup C$, ולכן $x\in A\setminus(B\cup C)$.
+
+לכן $\ans{A\setminus(B\cup C)=(A\setminus B)\cap(A\setminus C)}$.
+\end{solbox}
+\end{enumerate}
