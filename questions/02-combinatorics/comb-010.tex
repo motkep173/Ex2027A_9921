@@ -5,21 +5,25 @@
 % solution: full
 % verified: no
 % ==================================================================
-נסמן $\Omega=\set{A,B,C,D,E,F,G,H}$.
+נסמן $\Omega=\set{a,b,c,d,e,f,g,h}$.
 \begin{enumerate}
 \item כמה תתי-קבוצות שונות בגודל 2 יש ל-$\Omega$?
 \begin{solbox}
-\unverified
 בוחרים שני איברים שונים מתוך 8, בלי חשיבות לסדר ובלי חזרות: $\binom82=\frac{7\cdot8}2=\ans{28}$.
+\end{solbox}
+\item כמה מילים בנות 2 אותיות שונות אפשר להרכיב מהאותיות של $\Omega$? (יש משמעות לסדר: למשל, $ab$ ו-$ba$ הן שתי מילים שונות.)
+\begin{solbox}
+\unverified
+כאן יש חשיבות לסדר ואין חזרות: את האות הראשונה בוחרים מתוך 8, ואת השנייה מתוך 7 הנותרות. לפי עקרון הכפל יש $8\cdot7=\ans{56}$ מילים.
+
+\textbf{קשר לסעיף הקודם:} כל תת-קבוצה בגודל 2, למשל $\set{a,b}$, נותנת בדיוק שתי מילים, $ab$ ו-$ba$. לכן מספר המילים הוא פעמיים מספר תתי-הקבוצות: $2\cdot28=56$.
 \end{solbox}
 \item כמה תתי-קבוצות שונות יש ל-$\Omega$?
 \begin{solbox}
-\unverified
 $2^{|\Omega|}=2^8=\ans{256}$.
 \end{solbox}
 \item כמה מהן בגודל זוגי?
 \begin{solbox}
-\unverified
 תת-קבוצה בגודל זוגי היא מגודל $0,2,4,6$ או $8$, ולכן מספרן
 \[
 \binom80+\binom82+\binom84+\binom86+\binom88=1+28+70+28+1=\ans{128}.
@@ -27,7 +31,6 @@ $2^{|\Omega|}=2^8=\ans{256}$.
 \end{solbox}
 \item כמה מהן בגודל אי-זוגי?
 \begin{solbox}
-\unverified
 באותו אופן, $\binom81+\binom83+\binom85+\binom87=8+56+56+8=\ans{128}$.
 \end{solbox}
 \end{enumerate}
