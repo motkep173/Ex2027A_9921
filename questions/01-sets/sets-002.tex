@@ -3,8 +3,22 @@
 % topic:    תורת הקבוצות ומאורעות
 % subtopic: פעולות על קבוצות ומאורעות
 % solution: full
+% verified: no
 % ==================================================================
 הוכיחו שלכל שתי קבוצות $A\symdiff B=(A\cup B)\setminus(A\cap B)$, וציירו דיאגרמת ון. במונחי הבעיה של גפן (שאלה~\qref{sets-001}): מה המשמעות של המאורע $A\symdiff B$?
 \begin{solbox}
-$x$ שייך לכל אחד מהאגפים בדיוק כאשר הוא שייך לאחת משתי הקבוצות ולא לשתיהן. אצל גפן: היא קנתה בדיוק אחד מבין חלב סויה וחלב שקדים (ואולי גם שיבולת שועל).
+\unverified
+לפי ההגדרה, $A\symdiff B=(A\setminus B)\cup(B\setminus A)$. נוכיח שתי הכלות.
+
+\textbf{$A\symdiff B\subseteq(A\cup B)\setminus(A\cap B)$:} יהי $x\in A\symdiff B$. אז $x\in A\setminus B$ או $x\in B\setminus A$. אם $x\in A\setminus B$, אז $x\in A$, ולכן $x\in A\cup B$; וגם $x\notin B$, ולכן $x\notin A\cap B$. כלומר $x\in(A\cup B)\setminus(A\cap B)$. המקרה $x\in B\setminus A$ זהה, כשמחליפים את התפקידים של $A$ ו-$B$.
+
+\textbf{$(A\cup B)\setminus(A\cap B)\subseteq A\symdiff B$:} יהי $x\in(A\cup B)\setminus(A\cap B)$. אז $x\in A\cup B$ ו-$x\notin A\cap B$. אם $x\in A$, אז $x\notin B$ (אחרת $x\in A\cap B$), ולכן $x\in A\setminus B$. אם $x\in B$, אז באותו אופן $x\notin A$, ולכן $x\in B\setminus A$. בשני המקרים $x\in A\symdiff B$.
+
+לכן $\ans{A\symdiff B=(A\cup B)\setminus(A\cap B)}$. בדיאגרמה, $A\symdiff B$ הוא מה שנמצא בדיוק באחד משני העיגולים של $A$ ו-$B$ (בלי קשר ל-$C$):
+
+\begin{center}
+\venn{1/0/0,1/0/1,0/1/0,0/1/1}{$A\symdiff B$}
+\end{center}
+
+אצל גפן, $A\symdiff B$ הוא המאורע "גפן קנתה בדיוק אחד מבין חלב סויה וחלב שקדים" (ואולי גם חלב שיבולת שועל).
 \end{solbox}
