@@ -110,17 +110,36 @@ def chapter_body(qs, item, subsections=True, lists=True, first_page=True):
     return out
 
 
+RELEASE_LINE = '---'     # in structure.txt: the chapters below this line are not yet released to students
+
+
 def load_structure():
     """structure.txt -> {subtopic: (chapter index, subtopic index, chapter name)}"""
     order, chapter, ci = {}, None, -1
     with open(os.path.join(HERE, 'structure.txt'), encoding='utf-8') as f:
         for line in f:
             line = line.strip()
+            if line == RELEASE_LINE:
+                continue
             if line.startswith('## '):
                 chapter, ci = line[3:].strip(), ci + 1
             elif line and not line.startswith('#'):
                 order[line] = (ci, len(order), chapter)
     return order
+
+
+def unreleased():
+    """The subtopics below the release line in structure.txt. They stay out of the student booklets
+    and the site (but not out of the preview with --with-suggested, or the review page)."""
+    hidden, below = set(), False
+    with open(os.path.join(HERE, 'structure.txt'), encoding='utf-8') as f:
+        for line in f:
+            line = line.strip()
+            if line == RELEASE_LINE:
+                below = True
+            elif below and line and not line.startswith('#'):
+                hidden.add(line)
+    return hidden
 
 
 def write_bank(qs, target='bank.tex'):
@@ -330,6 +349,11 @@ if __name__ == '__main__':
         write_bank(qs, 'bank-preview.tex')
         nsug = sum(1 for q in qs if q.get('suggested') == 'yes')
         raise SystemExit(f'{len(qs)} questions ({nsug} suggested) -> bank-preview.tex')
+    hidden = unreleased()
+    held = sum(1 for q in qs if q['subtopic'] in hidden)
+    qs = [q for q in qs if q['subtopic'] not in hidden]
+    if held:
+        print(f'{held} questions below the release line in structure.txt (not released yet)')
     write_bank(qs)
     write_booklet(qs)
     write_solutions(qs)

@@ -16,7 +16,7 @@ out of index.html until they are approved and moved to questions/.
 """
 import base64, html, json, os, re, subprocess, sys
 
-from make_bank import load, load_structure, suggested_dir
+from make_bank import load, load_structure, suggested_dir, unreleased
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SITE = os.path.join(HERE, 'site')
@@ -502,6 +502,9 @@ def main():
     extra = suggested_dir()
     preview = extra is not None
     qs = [q for q in load(extra) if preview or q.get('suggested') != 'yes']
+    if not preview:                                   # the chapters below the release line stay hidden
+        hidden = unreleased()
+        qs = [q for q in qs if q['subtopic'] not in hidden]
     structure = load_structure()
     qs.sort(key=lambda q: (structure[q['subtopic']][:2], q['id']))
     # The exercise number in the student booklets: questions run 1, 2, ... in bank order, suggested ones left out.
