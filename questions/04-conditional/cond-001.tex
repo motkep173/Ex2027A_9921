@@ -16,9 +16,9 @@
 \unverified
 לפי נוסחת ההסתברות השלמה:
 \[
-\PP(B)=\PP(B\mid A)\PP(A)+\PP(B\mid\comp A)\PP(\comp A)=\frac4{10}\cdot\frac12+\frac3{10}\cdot\frac12=\frac7{20}=\ans{0.35}.
+\PP(B)=\PP(B\mid A)\PP(A)+\PP(B\mid A^C)\PP(A^C)=\frac4{10}\cdot\frac12+\frac3{10}\cdot\frac12=\frac7{20}=\ans{0.35}.
 \]
-($\PP(B\mid A)=\frac4{10}$, כי בקופסה א' יש 4 טושים כחולים מתוך 10, ובאותו אופן $\PP(B\mid\comp A)=\frac3{10}$.)
+($\PP(B\mid A)=\frac4{10}$, כי בקופסה א' יש 4 טושים כחולים מתוך 10, ובאותו אופן $\PP(B\mid A^C)=\frac3{10}$.)
 
 \textbf{דרך נוספת:} מכיוון שהקופסאות שוות הסתברות ובכל אחת 10 טושים, אפשר לחשוב על 20 טושים, מתוכם 7 כחולים, ולכן $\PP(B)=\frac7{20}$.
 \end{solbox}
@@ -44,13 +44,13 @@ $\PP(B\mid A)=\frac4{10}\neq\frac7{20}=\PP(B)$, ולכן \(\ans{\text{המאור
 \begin{solbox}
 \unverified
 \begin{enumerate}
-\item נסמן $C$ = "הוציא שני טושים כחולים". כאן $\PP(A)=p$ ו-$\PP(\comp A)=1-p$. אם בחר בקופסה א', יש $\binom{10}2=45$ דרכים לבחור שני טושים, מתוכן $\binom42=6$ טובות, ולכן $\PP(C\mid A)=\frac6{45}=\frac2{15}$. באותו אופן $\PP(C\mid\comp A)=\frac{\binom32}{45}=\frac1{15}$. לכן
+\item נסמן $C$ = "הוציא שני טושים כחולים". כאן $\PP(A)=p$ ו-$\PP(A^C)=1-p$. אם בחר בקופסה א', יש $\binom{10}2=45$ דרכים לבחור שני טושים, מתוכן $\binom42=6$ טובות, ולכן $\PP(C\mid A)=\frac6{45}=\frac2{15}$. באותו אופן $\PP(C\mid A^C)=\frac{\binom32}{45}=\frac1{15}$. לכן
 \[
 \PP(C)=\frac2{15}p+\frac1{15}(1-p)=\ans{\frac{1+p}{15}}.
 \]
-\item נתון $\PP(\comp A\mid C)=\frac17$. לפי בייס:
+\item נתון $\PP(A^C\mid C)=\frac17$. לפי בייס:
 \[
-\frac17=\PP(C\mid\comp A)\cdot\frac{\PP(\comp A)}{\PP(C)}=\frac1{15}\cdot\frac{1-p}{\frac{1+p}{15}}=\frac{1-p}{1+p}
+\frac17=\PP(C\mid A^C)\cdot\frac{\PP(A^C)}{\PP(C)}=\frac1{15}\cdot\frac{1-p}{\frac{1+p}{15}}=\frac{1-p}{1+p}
 \ \Longrightarrow\ 1+p=7(1-p)\ \Longrightarrow\ \ans{p=\tfrac34}.
 \]
 \end{enumerate}

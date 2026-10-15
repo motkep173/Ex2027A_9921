@@ -22,7 +22,7 @@ $\ans{A\cap B\cap C}$
 \item גפן קונה חלב סויה, אבל לא קונה שקדים ולא שיבולת שועל.
 \begin{solbox}
 \unverified
-$\ans{A\cap\comp B\cap\comp C}$
+$\ans{A\cap B^C\cap C^C}$
 
 \begin{center}
 \venn{1/0/0}{(ב)}
@@ -31,7 +31,7 @@ $\ans{A\cap\comp B\cap\comp C}$
 \item גפן קונה חלב שקדים, ועוד בדיוק אחד מבין שני הסוגים האחרים.
 \begin{solbox}
 \unverified
-$\ans{B\cap\big((A\cap\comp C)\cup(\comp A\cap C)\big)}$
+$\ans{B\cap\big((A\cap C^C)\cup(A^C\cap C)\big)}$
 
 \begin{center}
 \venn{1/1/0,0/1/1}{(ג)}
@@ -40,7 +40,7 @@ $\ans{B\cap\big((A\cap\comp C)\cup(\comp A\cap C)\big)}$
 \item גפן קונה לכל היותר סוג חלב אחד.
 \begin{solbox}
 \unverified
-$\ans{(\comp A\cap\comp B\cap\comp C)\cup(A\cap\comp B\cap\comp C)\cup(\comp A\cap B\cap\comp C)\cup(\comp A\cap\comp B\cap C)}$
+$\ans{(A^C\cap B^C\cap C^C)\cup(A\cap B^C\cap C^C)\cup(A^C\cap B\cap C^C)\cup(A^C\cap B^C\cap C)}$
 
 \begin{center}
 \venn{0/0/0,1/0/0,0/1/0,0/0/1}{(ד)}
@@ -49,7 +49,7 @@ $\ans{(\comp A\cap\comp B\cap\comp C)\cup(A\cap\comp B\cap\comp C)\cup(\comp A\c
 \item גפן קונה בדיוק סוג חלב אחד.
 \begin{solbox}
 \unverified
-$\ans{(A\cap\comp B\cap\comp C)\cup(\comp A\cap B\cap\comp C)\cup(\comp A\cap\comp B\cap C)}$
+$\ans{(A\cap B^C\cap C^C)\cup(A^C\cap B\cap C^C)\cup(A^C\cap B^C\cap C)}$
 
 \begin{center}
 \venn{1/0/0,0/1/0,0/0/1}{(ה)}
@@ -58,7 +58,7 @@ $\ans{(A\cap\comp B\cap\comp C)\cup(\comp A\cap B\cap\comp C)\cup(\comp A\cap\co
 \item גפן קונה בדיוק שני סוגי חלב.
 \begin{solbox}
 \unverified
-$\ans{(A\cap B\cap\comp C)\cup(A\cap\comp B\cap C)\cup(\comp A\cap B\cap C)}$
+$\ans{(A\cap B\cap C^C)\cup(A\cap B^C\cap C)\cup(A^C\cap B\cap C)}$
 
 \begin{center}
 \venn{1/1/0,1/0/1,0/1/1}{(ו)}
@@ -67,7 +67,7 @@ $\ans{(A\cap B\cap\comp C)\cup(A\cap\comp B\cap C)\cup(\comp A\cap B\cap C)}$
 \item גפן לא קונה חלב כלל.
 \begin{solbox}
 \unverified
-$\ans{\comp{A\cup B\cup C}}$
+$\ans{(A\cup B\cup C)^C}$
 
 \begin{center}
 \venn{0/0/0}{(ז)}
