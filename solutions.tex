@@ -27,6 +27,13 @@
 \expandafter\def\csname qref@sets-010\endcsname{7}
 \expandafter\def\csname qref@sets-004\endcsname{8}
 \expandafter\def\csname qref@sets-009\endcsname{9}
+\expandafter\def\csname qref@comb-001\endcsname{10}
+\expandafter\def\csname qref@comb-002\endcsname{11}
+\expandafter\def\csname qref@comb-008\endcsname{12}
+\expandafter\def\csname qref@comb-009\endcsname{13}
+\expandafter\def\csname qref@comb-010\endcsname{14}
+\expandafter\def\csname qref@comb-005\endcsname{15}
+\expandafter\def\csname qref@comb-006\endcsname{16}
 \renewcommand{\qref}[1]{\ifcsname qref@#1\endcsname\csname qref@#1\endcsname\else\textenglish{#1}\fi}
 
 \newpage
@@ -40,6 +47,11 @@
 \noindent \bknum{6}\ (א)\enskip הכלה דו-כיוונית: הראו ש-$A\cap B\subseteq A$ וגם ש-$A\subseteq A\cap B$. בכיוון השני השתמשו בהנחה $A\subseteq B$.\par\smallskip
 \noindent \bknum{7}\enskip כתבו את $A\cup B$ כאיחוד של שתי קבוצות זרות, $A\setminus B$ ו-$B$. לגודל של $A\setminus B$ השתמשו בעקרון החיסור.\par\smallskip
 \noindent \bknum{9}\ (ב)\enskip תתי-הקבוצות של קבוצה עם איבר אחד הן הקבוצה הריקה והקבוצה עצמה.\par\smallskip
+
+\subsection*{קומבינטוריקה}
+\noindent \bknum{10}\ (ג)\enskip חשבו על כל נושא כעל "בלוק" אחד: קודם מסדרים את הבלוקים, ואחר כך את הספרים בתוך כל בלוק.\par\smallskip
+\noindent \bknum{10}\ (ה)\enskip בכל שבוע בוחרים זוג ספרים, בלי חשיבות לסדר בתוך הזוג. הרשימה היא סדרה של 5 זוגות כאלה, אחד לכל שבוע, ולכן אפשר להשתמש בעקרון הכפל.\par\smallskip
+\noindent \bknum{15}\ (א)\enskip כתבו את 6 כשורה של שש אחדות: $1\ \_\ 1\ \_\ 1\ \_\ 1\ \_\ 1\ \_\ 1$. בין האחדות יש 5 רווחים, ובכל רווח מחליטים אם לשים בו "$+$" או להשאיר אותו ריק.\par\smallskip
 
 \newpage
 \section*{פתרונות}
@@ -57,5 +69,14 @@
 \bookq[]{questions/01-sets/sets-010}
 \bookq[]{questions/01-sets/sets-004}
 \bookq[]{questions/01-sets/sets-009}
+
+
+\bookq[\section{קומבינטוריקה}]{questions/02-combinatorics/comb-001}
+\bookq[]{questions/02-combinatorics/comb-002}
+\bookq[]{questions/02-combinatorics/comb-008}
+\bookq[]{questions/02-combinatorics/comb-009}
+\bookq[]{questions/02-combinatorics/comb-010}
+\bookq[]{questions/02-combinatorics/comb-005}
+\bookq[]{questions/02-combinatorics/comb-006}
 
 \end{document}
