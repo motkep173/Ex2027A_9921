@@ -1,0 +1,25 @@
+% ==================================================================
+% id:       sets-006
+% topic:    תורת הקבוצות ומאורעות
+% subtopic: פעולות על קבוצות ומאורעות
+% solution: full
+% ==================================================================
+תהי $U=\set{1,2,\dots,10}$, ויהיו $A=\set{1,2,3,4,5}$, $B=\set{2,4,6,8,10}$ ו-$C=\set{3,4,5,6}$. חשבו:
+\begin{enumerate}
+\item $A\setminus B$, $B\setminus A$ ו-$A\symdiff B$.
+\begin{solbox}
+$A\setminus B=\ans{\set{1,3,5}}$ ו-$B\setminus A=\ans{\set{6,8,10}}$, ולכן $A\symdiff B=(A\setminus B)\cup(B\setminus A)=\ans{\set{1,3,5,6,8,10}}$.
+\end{solbox}
+\item $A^C$ ו-$B^C$ (המשלים הוא ביחס ל-$U$).
+\begin{solbox}
+$A^C=\ans{\set{6,7,8,9,10}}$ ו-$B^C=\ans{\set{1,3,5,7,9}}$.
+\end{solbox}
+\item $(A\cup B)^C$ ו-$A^C\cap B^C$. איזה כלל מסביר את התוצאה?
+\begin{solbox}
+מסעיף א, $(A\cup B)^C=\ans{\set{7,9}}$. מסעיף ג, $A^C\cap B^C=\set{6,7,8,9,10}\cap\set{1,3,5,7,9}=\ans{\set{7,9}}$. קיבלנו אותה קבוצה, כמו שאומר כלל דה־מורגן: $(A\cup B)^C=A^C\cap B^C$.
+\end{solbox}
+\item $A\cap(B\cup C)$ ו-$(A\cap B)\cup(A\cap C)$.
+\begin{solbox}
+$B\cup C=\set{2,3,4,5,6,8,10}$, ולכן $A\cap(B\cup C)=\ans{\set{2,3,4,5}}$. מצד שני $A\cap B=\set{2,4}$ ו-$A\cap C=\set{3,4,5}$, ולכן $(A\cap B)\cup(A\cap C)=\ans{\set{2,3,4,5}}$. שתי הקבוצות שוות (חוק הפילוג).
+\end{solbox}
+\end{enumerate}

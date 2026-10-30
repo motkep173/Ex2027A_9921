@@ -1,0 +1,29 @@
+% ==================================================================
+% id:       sets-008
+% topic:    תורת הקבוצות ומאורעות
+% subtopic: תיאור קבוצות, שייכות והכלה
+% solution: full
+% ==================================================================
+תהי $A=\set{1,\set1,\set{1,2}}$. קבעו אם כל אחת מהטענות הבאות נכונה, ונמקו.
+\begin{enumerate}
+\item $\set1\in A$, וגם $\set1\subseteq A$.
+\begin{solbox}
+שתיהן נכונות. $\set1\in A$, כי $\set1$ הוא אחד האיברים של $A$. וגם $\set1\subseteq A$, כי האיבר היחיד של $\set1$ הוא $1$, ו-$1\in A$.
+\end{solbox}
+\item $\set{1,2}\subseteq A$.
+\begin{solbox}
+לא נכון: $2\in\set{1,2}$ אבל $2\notin A$. (לעומת זאת $\set{1,2}\in A$.)
+\end{solbox}
+\item $\set{\set{1,2}}\subseteq A$.
+\begin{solbox}
+נכון: האיבר היחיד של $\set{\set{1,2}}$ הוא $\set{1,2}$, והוא איבר של $A$.
+\end{solbox}
+\item $\emptyset\in A$, וגם $\emptyset\subseteq A$.
+\begin{solbox}
+$\emptyset\in A$ לא נכון: $\emptyset$ אינו אחד משלושת האיברים של $A$. לעומת זאת $\emptyset\subseteq A$ נכון, כמו לכל קבוצה: אין ב-$\emptyset$ אף איבר שלא נמצא ב-$A$.
+\end{solbox}
+\item $|A|=4$.
+\begin{solbox}
+לא נכון: ל-$A$ יש שלושה איברים, $1$, $\set1$ ו-$\set{1,2}$, ולכן $|A|=\ans3$. האיברים של האיברים (כמו $2$) לא נספרים.
+\end{solbox}
+\end{enumerate}
