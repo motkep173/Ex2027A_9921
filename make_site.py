@@ -529,8 +529,8 @@ def main():
     payload = json.dumps({'taxonomy': {'topics': topics}, 'questions': cards},
                          ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')
     macros = json.load(open(os.path.join(SITE, 'macros.json'), encoding='utf-8'))
-    with open(os.path.join(SITE, 'bgu-logo.svg'), 'rb') as fh:
-        logo = 'data:image/svg+xml;base64,' + base64.b64encode(fh.read()).decode()
+    with open(os.path.join(SITE, 'unit-logo.png'), 'rb') as fh:
+        logo = 'data:image/png;base64,' + base64.b64encode(fh.read()).decode()
     tpl = open(os.path.join(SITE, 'template.html'), encoding='utf-8').read()
     out = (tpl.replace('/*__DATA__*/', payload).replace('/*__LOGO__*/', logo)
               .replace('/*__MACROS__*/', json.dumps(macros, ensure_ascii=False)))
