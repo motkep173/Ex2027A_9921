@@ -23,7 +23,7 @@
 | `catalog.md` | טבלה של כל השאלות: מזהה, תת־נושא, האם יש פתרון, ותחילת השאלה |
 | `sheet-template.tex` | תבנית להרכבת דף תרגילים מתוך המאגר |
 | `bank-setup.tex` | הגדרות משותפות: `solbox`, המתג `\ifsol`, `\hint`, `\qref` ועוד |
-| `preamble/` | `MotkePreamble.tex` ו-`logo.jpg` |
+| `preamble/` | `MotkePreamble.tex`, `logo.jpg` ו-`unit-logo.png` (הלוגו של היחידה, בשער החוברות) |
 | `site/` | התבנית של האתר (`template.html`), הלוגו, המאקרו של הנוסחאות (`macros.json`) ובודק הנוסחאות |
 
 ## מה לא נמצא כאן
