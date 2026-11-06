@@ -128,6 +128,35 @@ def load_structure():
     return order
 
 
+PUBLISHED = os.path.join(HERE, 'published.txt')
+
+
+def published():
+    """published.txt -> the ids of the questions students already have, in booklet order."""
+    if not os.path.exists(PUBLISHED):
+        return []
+    with open(PUBLISHED, encoding='utf-8') as f:
+        return [l.strip() for l in f if l.strip() and not l.lstrip().startswith('#')]
+
+
+def order_key(structure, pub=None):
+    """Sort key for the booklet order: the questions students already have keep their place (and so
+    their number), in the order of published.txt; every other question comes after them, in the order
+    of structure.txt and then by id."""
+    pos = {i: n for n, i in enumerate(published() if pub is None else pub)}
+    return lambda q: (0, pos[q['id']], 0, '') if q['id'] in pos else (1, 0, structure[q['subtopic']][:2], q['id'])
+
+
+def record_published(qs):
+    """Append to published.txt the released questions that are not in it yet (run on main by the build)."""
+    pub = published()
+    new = [q['id'] for q in qs if q.get('suggested') != 'yes' and q['id'] not in pub]
+    if new:
+        with open(PUBLISHED, 'a', encoding='utf-8') as f:
+            f.write('\n'.join(new) + '\n')
+        print(f'published.txt: {len(new)} new questions recorded')
+
+
 def unreleased():
     """The subtopics below the release line in structure.txt. They stay out of the student booklets
     and the site (but not out of the preview with --with-suggested, or the review page)."""
@@ -336,7 +365,7 @@ if __name__ == '__main__':
         raise SystemExit(f'subtopics missing from structure.txt: {missing}')
     for q in qs:
         q['topic'] = structure[q['subtopic']][2]      # the chapter comes from structure.txt
-    qs.sort(key=lambda q: (structure[q['subtopic']][:2], q['id']))
+    qs.sort(key=order_key(structure))
     ids = [q['id'] for q in qs]
     dup = {i for i in ids if ids.count(i) > 1}
     if dup:
@@ -354,6 +383,8 @@ if __name__ == '__main__':
     qs = [q for q in qs if q['subtopic'] not in hidden]
     if held:
         print(f'{held} questions below the release line in structure.txt (not released yet)')
+    if '--record-published' in sys.argv:
+        record_published(qs)
     write_bank(qs)
     write_booklet(qs)
     write_solutions(qs)

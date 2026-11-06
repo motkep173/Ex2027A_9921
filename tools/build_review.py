@@ -26,7 +26,7 @@ import glob, hashlib, json, os, re, sys
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, HERE)
 import make_site                                              # noqa: E402
-from make_bank import load, load_structure, read_question    # noqa: E402
+from make_bank import load, load_structure, order_key, read_question    # noqa: E402
 
 
 def sources(private):
@@ -52,7 +52,7 @@ def digest(item):
 def items(private):
     qs = load(os.path.join(private, 'exercises', 'suggested'))
     structure = load_structure()
-    qs.sort(key=lambda q: (structure[q['subtopic']][:2], q['id']))
+    qs.sort(key=order_key(structure))
     book = {q['id']: n for n, q in enumerate((q for q in qs if q.get('suggested') != 'yes'), 1)}
     bank = {q['id']: n for n, q in enumerate(qs, 1)}
     refs = {q['id']: str(book[q['id']]) if q['id'] in book else 'מהצעה חדשה' for q in qs}
