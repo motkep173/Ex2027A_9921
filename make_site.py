@@ -16,7 +16,7 @@ out of index.html until they are approved and moved to questions/.
 """
 import base64, html, json, os, re, subprocess, sys
 
-from make_bank import load, load_structure, suggested_dir, unreleased
+from make_bank import load, load_structure, order_key, suggested_dir, unreleased
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SITE = os.path.join(HERE, 'site')
@@ -506,7 +506,7 @@ def main():
         hidden = unreleased()
         qs = [q for q in qs if q['subtopic'] not in hidden]
     structure = load_structure()
-    qs.sort(key=lambda q: (structure[q['subtopic']][:2], q['id']))
+    qs.sort(key=order_key(structure))
     # The exercise number in the student booklets: questions run 1, 2, ... in bank order, suggested ones left out.
     book = {q['id']: n for n, q in enumerate((q for q in qs if q.get('suggested') != 'yes'), 1)}
     # \qref{id} becomes the referred exercise's booklet number (the text around it already says "שאלה").
