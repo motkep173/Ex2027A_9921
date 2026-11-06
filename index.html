@@ -438,11 +438,9 @@ function option(value, label) {
 }
 const escapeHtml = s => s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
-// Order: syllabus order of topic/sub, then the order of the question bank (question id, then part) -- the booklet order.
-const subOrder = {};
-TOPICS.forEach((t, i) => t.subs.forEach((s, j) => { subOrder[t.name + "|" + s] = i * 100 + j; }));
+// Order: the booklet order, as make_site.py wrote the questions (published questions keep their number,
+// so a question added later comes after them even when its subtopic is earlier).
 QUESTIONS.forEach((q, i) => { q.rank = i; });
-QUESTIONS.sort((a, b) => (subOrder[a.topic + "|" + a.sub] - subOrder[b.topic + "|" + b.sub]) || (a.rank - b.rank));
 
 // Free-text search: question text without tags or formula markup, plus topic and subtopic
 const fold = s => s.toLowerCase().replace(/[\u0591-\u05C7]/g, "").replace(/\s+/g, " ");
