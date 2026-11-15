@@ -1,0 +1,26 @@
+% ==================================================================
+% id:       cond-007
+% topic:    הסתברות מותנית ואי-תלות
+% subtopic: הסתברות מותנית
+% solution: full
+% ==================================================================
+נתון $\PP(A)=0.4$, $\PP(B)=0.25$, $\PP(A\cap B)=0.15$. חשבו:
+\begin{enumerate}
+\item $\PP(A^c\cap B^c)$
+\begin{solbox}
+לפי כללי דה-מורגן $A^c\cap B^c=(A\cup B)^c$. לפי הכלה והפרדה $\PP(A\cup B)=0.4+0.25-0.15=0.5$, ולכן
+$\PP(A^c\cap B^c)=1-0.5=\ans{0.5}$.
+\end{solbox}
+\item $\PP(B\mid A)$
+\begin{solbox}
+$\PP(B\mid A)=\frac{\PP(A\cap B)}{\PP(A)}=\frac{0.15}{0.4}=\ans{\frac38}$.
+\end{solbox}
+\item $\PP(A^c\mid B)$
+\begin{solbox}
+$B$ הוא האיחוד הזר של $A\cap B$ ו-$A^c\cap B$, ולכן $\PP(A^c\cap B)=0.25-0.15=0.1$, ו-
+\[
+\PP(A^c\mid B)=\frac{0.1}{0.25}=\ans{0.4}.
+\]
+דרך אחרת: $\PP(A^c\mid B)=1-\PP(A\mid B)=1-\frac{0.15}{0.25}=0.4$.
+\end{solbox}
+\end{enumerate}
