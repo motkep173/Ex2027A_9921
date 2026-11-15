@@ -1,0 +1,23 @@
+% ==================================================================
+% id:       cond-009
+% topic:    הסתברות מותנית ואי-תלות
+% subtopic: הסתברות מותנית
+% solution: full
+% ==================================================================
+נתון $\PP(A)=0.6$, $\PP(B)=0.15$, $\PP(B\mid A^c)=0.25$. חשבו:
+\begin{enumerate}
+\item $\PP(A\cap B)$
+\hint{פרקו את $B$ לשני חלקים זרים: החלק שבתוך $A$ והחלק שמחוץ ל-$A$.}
+\begin{solbox}
+לפי כלל הכפל, $\PP(A^c\cap B)=\PP(B\mid A^c)\,\PP(A^c)=0.25\cdot0.4=0.1$.
+$B$ הוא האיחוד הזר של $A\cap B$ ו-$A^c\cap B$, ולכן $\PP(A\cap B)=0.15-0.1=\ans{0.05}$.
+\end{solbox}
+\item $\PP(A\cup B)$
+\begin{solbox}
+$\PP(A\cup B)=0.6+0.15-0.05=\ans{0.7}$.
+\end{solbox}
+\item $\PP(A\mid B)$
+\begin{solbox}
+$\PP(A\mid B)=\frac{0.05}{0.15}=\ans{\frac13}$.
+\end{solbox}
+\end{enumerate}
