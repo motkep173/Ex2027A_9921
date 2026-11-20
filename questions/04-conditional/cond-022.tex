@@ -1,0 +1,24 @@
+% ==================================================================
+% id:       cond-022
+% topic:    הסתברות מותנית ואי-תלות
+% subtopic: מאורעות בלתי תלויים
+% solution: full
+% ==================================================================
+$A$ ו־$B$ הם מאורעות במרחב מדגם $\Omega$, ומתקיים
+\[
+\PP(A)=\frac58,\qquad \PP(B^C)=\frac23,\qquad \PP(A\cup B)=\frac34.
+\]
+\begin{enumerate}
+\item האם $A$ ו־$B$ זרים?
+\begin{solbox}
+$\PP(B)=1-\frac23=\frac13$. לפי עקרון ההכלה וההפרדה
+\[
+\PP(A\cap B)=\PP(A)+\PP(B)-\PP(A\cup B)=\frac58+\frac13-\frac34=\frac{15+8-18}{24}=\frac5{24}.
+\]
+ההסתברות של החיתוך חיובית, ולכן החיתוך לא ריק: $A$ ו־$B$ \(\ans{\text{אינם זרים}}\).
+\end{solbox}
+\item האם $A$ ו־$B$ בלתי תלויים?
+\begin{solbox}
+$\PP(A)\PP(B)=\frac58\cdot\frac13=\frac5{24}=\PP(A\cap B)$, ולכן $A$ ו־$B$ \(\ans{\text{בלתי תלויים}}\).
+\end{solbox}
+\end{enumerate}
