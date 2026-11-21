@@ -11,6 +11,7 @@ on:
       - 'questions/**'
       - 'structure.txt'
       - 'published.txt'
+      - 'sheets.txt'
       - 'make_bank.py'
       - 'make_site.py'
       - 'site/**'
