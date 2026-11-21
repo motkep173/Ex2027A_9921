@@ -28,3 +28,10 @@ prob-012
 prob-001
 prob-005
 prob-008
+
+## 3
+cond-007
+cond-001 א ב ג
+cond-013
+cond-022
+cond-024
