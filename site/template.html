@@ -370,7 +370,7 @@ mjx-assistive-mml { max-width: 100%; overflow: hidden; }
   </button>
 
   <footer>
-    <div>„פתרון רשמי” נלקח מקובצי הפתרון של צוות הקורס. „פתרון שלא נבדק על ידי צוות הקורס” נכתב בנפרד ועשוי להכיל טעויות.</div>
+    <div>״פתרון רשמי״ נלקח מקובצי הפתרון של צוות הקורס. ״פתרון שלא נבדק על ידי צוות הקורס״ נכתב בנפרד ועשוי להכיל טעויות.</div>
     <div id="footer-stats"></div>
     <div>אוניברסיטת בן־גוריון בנגב · היחידה להוראת קורסי יסוד · קורס 214.1.9921</div>
   </footer>
@@ -714,7 +714,7 @@ function render() {
   const items = QUESTIONS.filter(q => (!topic || q.topic === topic) && (!sub || q.sub === sub) &&
     (!words.length || matchesSearch(q, words)));
   count.innerHTML = words.length
-    ? `נמצאו <strong>${items.length}</strong> סעיפים עבור „${escapeHtml(searchInput.value.trim())}”`
+    ? `נמצאו <strong>${items.length}</strong> סעיפים עבור ״${escapeHtml(searchInput.value.trim())}״`
     : `מוצגים <strong>${items.length}</strong> סעיפים`;
   if (!items.length) {
     main.replaceChildren(el("p", "empty", words.length
