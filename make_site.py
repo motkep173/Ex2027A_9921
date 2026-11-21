@@ -16,7 +16,7 @@ out of index.html until they are approved and moved to questions/.
 """
 import base64, html, json, os, re, subprocess, sys
 
-from make_bank import load, load_structure, order_key, suggested_dir, unreleased
+from make_bank import load, load_structure, order_key, suggested_dir, unreleased, load_sheets
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SITE = os.path.join(HERE, 'site')
@@ -526,7 +526,24 @@ def main():
             seen[chapter]['subs'].append(sub)
     topics = [t for t in topics if t['subs']]
 
-    payload = json.dumps({'taxonomy': {'topics': topics}, 'questions': cards},
+    # Exercises of the submission sheets (sheets.txt): each card gets 'sheet': [[sheet number, parts or '']].
+    # A card that is one part of a question is marked when its letter is listed (or the whole question is);
+    # a question shown as one card names the listed parts in the mark.
+    sheets = load_sheets(qs)
+    for qid, marks in sheets.items():
+        mine = [c for c in cards if c['qid'] == qid]
+        for sheet, letters in marks:
+            if len(mine) == 1 and mine[0]['id'] == qid:
+                mine[0].setdefault('sheet', []).append([sheet, ', '.join(letters)])
+                continue
+            hit = [c for c in mine if not letters or LETTERS[LATIN.index(c['id'][len(qid):])] in letters]
+            if letters and len(hit) != len(letters):
+                raise SystemExit(f'sheets.txt: sheet {sheet}: {qid} has no such parts: {letters}')
+            for c in hit:
+                c.setdefault('sheet', []).append([sheet, ''])
+    sheet_numbers = sorted({n for marks in sheets.values() for n, _ in marks})
+
+    payload = json.dumps({'taxonomy': {'topics': topics}, 'sheets': sheet_numbers, 'questions': cards},
                          ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')
     macros = json.load(open(os.path.join(SITE, 'macros.json'), encoding='utf-8'))
     with open(os.path.join(SITE, 'unit-logo.png'), 'rb') as fh:

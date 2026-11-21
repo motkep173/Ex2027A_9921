@@ -263,6 +263,9 @@ figure.venn text { font: italic 13px "Times New Roman", serif; fill: var(--ink);
 /* A suggested question (preview.html only): pink until it is approved */
 .q.suggested { border-color: #d63384; box-shadow: inset 0 0 0 1px #d63384; }
 .badge.suggested { background: #fbe4ef; color: #a3195b; border: 1px solid #d63384; }
+/* An exercise (or one part of it) that was in a submission sheet */
+.badge.sheet { background: var(--brand-soft); color: var(--brand); border: 1px solid var(--brand-bright); white-space: nowrap; }
+.part-item > .badge.sheet { justify-self: start; }
 
 /* Formulas are drawn as SVG (as on the exams bank site): exact sizes, nothing clipped. A display formula wider than
    the card scrolls inside its own line. */
@@ -345,6 +348,10 @@ mjx-assistive-mml { max-width: 100%; overflow: hidden; }
       <label for="sub">תת־נושא</label>
       <select id="sub" disabled></select>
     </div>
+    <div class="field" id="sheet-field" hidden>
+      <label for="sheet">מטלה</label>
+      <select id="sheet"></select>
+    </div>
     </div>
   </details>
 
@@ -400,6 +407,7 @@ const PAGE = 15;
 
 const topicSel = document.getElementById("topic");
 const subSel = document.getElementById("sub");
+const sheetSel = document.getElementById("sheet");
 const searchInput = document.getElementById("search");
 const main = document.getElementById("main");
 const count = document.getElementById("count");
@@ -498,6 +506,16 @@ document.getElementById("footer-stats").textContent =
   `לכל ${nSolved} מתוך ${QUESTIONS.length} הסעיפים יש פתרון. ${nOfficial} מהפתרונות רשמיים.`;
 
 topicSel.append(option("", "כל הנושאים"), ...TOPICS.map(t => option(t.name, t.name)));
+if (DATA.sheets && DATA.sheets.length) {
+  sheetSel.append(option("", "כל התרגילים"), ...DATA.sheets.map(n => option(String(n), `מטלה ${n}`)));
+  document.getElementById("sheet-field").hidden = false;
+}
+// The mark of an exercise (or a part) that was in a submission sheet: "מטלה 2", with the parts when
+// the question is shown as one card.
+function sheetBadges(q) {
+  return (q.sheet || []).map(([n, parts]) => el("span", "badge sheet",
+    `מטלה ${n}` + (parts ? `: ${parts.includes(",") ? "סעיפים" : "סעיף"} ${parts}` : "")));
+}
 function fillSubs() {
   const t = TOPICS.find(t => t.name === topicSel.value);
   subSel.replaceChildren(option("", "כל תתי־הנושאים"), ...(t ? t.subs.map(s => option(s, s)) : []));
@@ -544,6 +562,7 @@ function card(q) {
   const meta = el("div", "meta");
   meta.append(el("span", "chip", q.topic), el("span", "chip sub", q.sub));
   if (q.suggested) { c.classList.add("suggested"); meta.append(el("span", "badge suggested", "הצעה חדשה, טרם אושרה")); }
+  meta.append(...sheetBadges(q));
   solvedBtn(q, c, meta);
   c.append(meta);
   // The exercise number, the same as in both PDF booklets
@@ -657,6 +676,7 @@ function groupCard(qs) {
   if (intro) c.append(el("div", "q-text", intro.innerHTML));
   qs.forEach(p => {
     const box = el("section", "part-item");
+    box.append(...sheetBadges(p));
     const t = el("div", "", p.text);
     const part = t.querySelector(".part");
     box.append(el("div", "q-text", part ? part.outerHTML : p.text));
@@ -705,13 +725,14 @@ function renderList(items) {
 }
 
 function render() {
-  const topic = topicSel.value, sub = subSel.value;
+  const topic = topicSel.value, sub = subSel.value, sheet = Number(sheetSel.value);
   const words = fold(searchInput.value.trim()).split(" ").filter(Boolean);
-  const nActive = [topicSel, subSel].filter(x => x.value).length + (words.length ? 1 : 0);
+  const nActive = [topicSel, subSel, sheetSel].filter(x => x.value).length + (words.length ? 1 : 0);
   document.getElementById("active-count").textContent = nActive ? `${nActive} פעילים` : "";
   document.getElementById("clear").hidden = !nActive;
   renderNav();
   const items = QUESTIONS.filter(q => (!topic || q.topic === topic) && (!sub || q.sub === sub) &&
+    (!sheet || (q.sheet || []).some(s => s[0] === sheet)) &&
     (!words.length || matchesSearch(q, words)));
   count.innerHTML = words.length
     ? `נמצאו <strong>${items.length}</strong> סעיפים עבור ״${escapeHtml(searchInput.value.trim())}״`
@@ -727,9 +748,10 @@ function render() {
 
 topicSel.addEventListener("change", () => { fillSubs(); render(); });
 subSel.addEventListener("change", render);
+sheetSel.addEventListener("change", render);
 let searchTimer;
 searchInput.addEventListener("input", () => { clearTimeout(searchTimer); searchTimer = setTimeout(render, 200); });
-function clearFilters() { searchInput.value = ""; topicSel.value = ""; fillSubs(); render(); }
+function clearFilters() { searchInput.value = ""; topicSel.value = ""; sheetSel.value = ""; fillSubs(); render(); }
 // The clear button sits in the summary line: don't let the click also fold the panel.
 document.getElementById("clear").addEventListener("click", e => { e.preventDefault(); clearFilters(); });
 
