@@ -80,8 +80,16 @@
 \def\bk@boxes{boxes}
 \newcounter{bkq}
 \newcommand{\bknum}[1]{\textcolor{bkorange}{\bfseries #1.}}
+% \bksheet{מטלה 2: סעיפים (א), (ג)} לפני \bookq: התרגיל הבא היה במטלה להגשה, והסימון מודפס מעליו.
+% make_bank.py כותב את השורה הזו לפי sheets.txt, רק בחוברת התרגילים.
+\let\bk@sheetnote\@empty
+\newcommand{\bksheet}[1]{\gdef\bk@sheetnote{#1}}
+\newtcbox{\bk@sheetbox}{on line, colback=bkorange!8, colframe=bkorange!70, boxrule=0.5pt, arc=5pt,
+  left=5pt, right=5pt, top=1pt, bottom=1pt, boxsep=0pt}
+\newcommand{\bk@sheetmark}{\ifx\bk@sheetnote\@empty\else
+  \leavevmode\bk@sheetbox{\footnotesize\color{bkorange!85!black}\bfseries\bk@sheetnote}\par\nopagebreak\vspace{-1pt}\fi}
 \newcommand{\bk@q}[1]{\stepcounter{bkq}%
-  \begin{enumerate}[label=\bknum{\arabic{bkq}}, leftmargin=2em, topsep=0pt]\item \input{#1}\end{enumerate}}
+  \begin{enumerate}[label=\bknum{\arabic{bkq}}, leftmargin=2em, topsep=0pt]\item \bk@sheetmark\input{#1}\end{enumerate}}
 \newtcolorbox{bkbox}{enhanced, breakable, colback=bklight, frame hidden, sharp corners,
   borderline east={2.5pt}{0pt}{bkorange}, left=4pt, right=6pt, top=5pt, bottom=5pt,
   before skip=0pt, after skip=10pt}
@@ -111,7 +119,8 @@
     % גם אם התרגיל הזה ימשיך בעמוד הבא
     \needspace{7\baselineskip}%
     #1\bk@one{#2}%
-  \fi}
+  \fi
+  \global\let\bk@sheetnote\@empty}
 \newcommand{\bk@keep}[1]{%
   \bk@measureit{\bk@one{#1}}%
   \ifdim\bk@need>\dimexpr\textheight-3\baselineskip\relax
