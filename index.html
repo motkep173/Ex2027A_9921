@@ -377,7 +377,6 @@ mjx-assistive-mml { max-width: 100%; overflow: hidden; }
   </button>
 
   <footer>
-    <div>״פתרון רשמי״ נלקח מקובצי הפתרון של צוות הקורס. ״פתרון שלא נבדק על ידי צוות הקורס״ נכתב בנפרד ועשוי להכיל טעויות.</div>
     <div id="footer-stats"></div>
     <div>אוניברסיטת בן־גוריון בנגב · היחידה להוראת קורסי יסוד · קורס 214.1.9921</div>
   </footer>
@@ -486,7 +485,6 @@ function solvedBtn(q, c, meta) {
 }
 
 // Header stats
-const nOfficial = QUESTIONS.filter(q => q.solution && q.solution.official).length;
 const nSolved = QUESTIONS.filter(q => q.solution).length;
 const nHints = QUESTIONS.filter(q => q.hint).length;
 const BOOK_QIDS = new Set(QUESTIONS.filter(q => q.book && !q.suggested).map(q => q.qid));
@@ -503,7 +501,7 @@ showStats();
 document.querySelectorAll("[data-hints]").forEach(e => { e.hidden = !nHints; });
 document.querySelectorAll("[data-nohints]").forEach(e => { e.hidden = !!nHints; });
 document.getElementById("footer-stats").textContent =
-  `לכל ${nSolved} מתוך ${QUESTIONS.length} הסעיפים יש פתרון. ${nOfficial} מהפתרונות רשמיים.`;
+  `לכל ${nSolved} מתוך ${QUESTIONS.length} הסעיפים יש פתרון.`;
 
 topicSel.append(option("", "כל הנושאים"), ...TOPICS.map(t => option(t.name, t.name)));
 if (DATA.sheets && DATA.sheets.length) {
@@ -611,9 +609,10 @@ function answer(q, c) {
   const sol = el("section", "solution");
   sol.id = sid; sol.hidden = true;
   const s = q.solution;
-  sol.append(el("div", "sol-head", `<h3>פתרון</h3>` + (s.official
-    ? `<span class="badge official">פתרון רשמי</span>`
-    : s.reviewed ? `<span class="badge official">נבדק על ידי צוות הקורס</span>`
+  // Every published solution here is official (a chapter is released only after all its solutions are approved),
+  // so official solutions carry no label. The orange label is only a safety net for a draft that slipped through.
+  sol.append(el("div", "sol-head", `<h3>פתרון</h3>` + (s.official || s.reviewed
+    ? ``
     : `<span class="badge unofficial">פתרון שלא נבדק על ידי צוות הקורס</span>`)));
   const steps = el("ol", "steps", s.steps.map(x => `<li>${x}</li>`).join(""));
   const ans = s.answer ? el("div", "answer", `<span>תשובה:</span>${s.answer}`) : null;
